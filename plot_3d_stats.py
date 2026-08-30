@@ -236,21 +236,45 @@ def create_tetrahedral_plot(df, threshold_percent=0.02):
     
     html_content = fig.to_html(include_plotlyjs="cdn", full_html=True)
 
-    # Injected JavaScript logic that remembers manual camera position and zoom distance
+    # Injected HTML/JS UI elements: Top-Left Toggle Button with Dynamic Countdown
     auto_spin_js = """
+    <button id="spin-toggle-btn" style="
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        z-index: 9999;
+        background: #1e1e28;
+        color: #ffb703;
+        border: 1px solid #ffb703;
+        padding: 8px 14px;
+        border-radius: 6px;
+        font-family: sans-serif;
+        font-size: 13px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0px 2px 6px rgba(0,0,0,0.5);
+        transition: all 0.2s ease;
+        min-width: 170px;
+        text-align: center;
+    ">Auto-Rotation: ON</button>
+
     <script>
     document.addEventListener("DOMContentLoaded", function() {
         var gd = document.querySelector('.plotly-graph-div');
-        if (!gd) return;
+        var btn = document.getElementById('spin-toggle-btn');
+        if (!gd || !btn) return;
 
         var radius = 1.8;
-        var theta = Math.atan2(1.3, 1.3); // Initial angle from x=1.3, y=1.3
+        var theta = Math.atan2(1.3, 1.3);
         var currentZ = 0.9;
+        var autoSpinEnabled = true;
         var isUserInteracting = false;
-        var resumeTimeout = null;
+        
+        var countdownSecs = 20;
+        var countdownTimer = null;
 
         function rotateCamera() {
-            if (isUserInteracting) return;
+            if (!autoSpinEnabled || isUserInteracting) return;
             theta += 0.005;
             var x = radius * Math.cos(theta);
             var y = radius * Math.sin(theta);
@@ -262,22 +286,68 @@ def create_tetrahedral_plot(df, threshold_percent=0.02):
 
         setInterval(rotateCamera, 30);
 
-        function handleUserInteraction() {
-            isUserInteracting = true;
-            if (resumeTimeout) clearTimeout(resumeTimeout);
-            
-            // Wait 8 seconds of inactivity before resuming
-            resumeTimeout = setTimeout(function() {
-                // Read camera eye position after manual interaction stops
-                if (gd.layout && gd.layout.scene && gd.layout.scene.camera && gd.layout.scene.camera.eye) {
-                    var eye = gd.layout.scene.camera.eye;
-                    radius = Math.sqrt(eye.x * eye.x + eye.y * eye.y);
-                    theta = Math.atan2(eye.y, eye.x);
-                    currentZ = eye.z;
-                }
-                isUserInteracting = false;
-            }, 8000);
+        function updateButtonText() {
+            if (!autoSpinEnabled) {
+                btn.innerText = "Auto-Rotation: OFF";
+                btn.style.borderColor = "#666666";
+                btn.style.color = "#888888";
+            } else if (isUserInteracting) {
+                btn.innerText = "Resuming in " + countdownSecs + "s...";
+                btn.style.borderColor = "#00b4d8";
+                btn.style.color = "#00b4d8";
+            } else {
+                btn.innerText = "Auto-Rotation: ON";
+                btn.style.borderColor = "#ffb703";
+                btn.style.color = "#ffb703";
+            }
         }
+
+        function handleUserInteraction() {
+            if (!autoSpinEnabled) return;
+            
+            isUserInteracting = true;
+            countdownSecs = 20;
+            updateButtonText();
+
+            if (countdownTimer) clearInterval(countdownTimer);
+
+            countdownTimer = setInterval(function() {
+                countdownSecs--;
+                if (countdownSecs <= 0) {
+                    clearInterval(countdownTimer);
+                    countdownTimer = null;
+
+                    // Read current manual camera state before resuming
+                    if (gd.layout && gd.layout.scene && gd.layout.scene.camera && gd.layout.scene.camera.eye) {
+                        var eye = gd.layout.scene.camera.eye;
+                        radius = Math.sqrt(eye.x * eye.x + eye.y * eye.y);
+                        theta = Math.atan2(eye.y, eye.x);
+                        currentZ = eye.z;
+                    }
+
+                    isUserInteracting = false;
+                    updateButtonText();
+                } else {
+                    updateButtonText();
+                }
+            }, 1000);
+        }
+
+        btn.addEventListener('click', function() {
+            autoSpinEnabled = !autoSpinEnabled;
+            if (countdownTimer) {
+                clearInterval(countdownTimer);
+                countdownTimer = null;
+            }
+
+            if (autoSpinEnabled) {
+                isUserInteracting = false;
+                updateButtonText();
+            } else {
+                isUserInteracting = true;
+                updateButtonText();
+            }
+        });
 
         gd.addEventListener('mousedown', handleUserInteraction);
         gd.addEventListener('wheel', handleUserInteraction);
@@ -292,7 +362,7 @@ def create_tetrahedral_plot(df, threshold_percent=0.02):
     with open(output_html, "w", encoding="utf-8") as f:
         f.write(html_content)
 
-    print(f"Saved 3D tetrahedral plot with smooth position-memory auto-rotation as: {output_html}")
+    print(f"Saved 3D tetrahedral plot with countdown button as: {output_html}")
     
     try:
         webbrowser.open("file://" + os.path.realpath(output_html))
