@@ -4,6 +4,15 @@ A Python-based workflow designed for **World of Warcraft (Balance Druid / Moonki
 
 ---
 
+## 🌐 Live Interactive Demo
+
+View the live, interactive ternary plot directly in your browser:
+👉 [View Interactive Plotly Report](https://mahranaka.github.io/sims_stat_distribution/moonkin_ternary_stats.html)
+
+*(Note: Enable **GitHub Pages** on your repo pointing to the `main` branch root folder for this link to serve live).*
+
+---
+
 ## 🌟 Features
 
 * **Grid Generation (`generate_grid.py`):** Automatically creates a `.simc` file featuring a realistic secondary stat budget (Haste, Mastery, Crit) with defined step sizes.
