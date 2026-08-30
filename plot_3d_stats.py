@@ -173,7 +173,64 @@ def create_tetrahedral_plot(df, threshold_percent=0.02):
         name="Absolute Peak"
     ))
 
-    # 4. Tetrahedron Wireframe & Axis Vertex Labels
+# 4. Outermost Stat Boundary Points (Layered for High-Contrast White Borders)
+    if not df_top.empty:
+        max_h_val = df_top["haste"].max()
+        max_m_val = df_top["mastery"].max()
+        max_c_val = df_top["crit"].max()
+        max_v_val = df_top["vers"].max()
+
+        h_bound = df_top[df_top["haste"] == max_h_val].assign(stat_type="HASTE", stat_val=max_h_val)
+        m_bound = df_top[df_top["mastery"] == max_m_val].assign(stat_type="MASTERY", stat_val=max_m_val)
+        c_bound = df_top[df_top["crit"] == max_c_val].assign(stat_type="CRIT", stat_val=max_c_val)
+        v_bound = df_top[df_top["vers"] == max_v_val].assign(stat_type="VERSATILITY", stat_val=max_v_val)
+
+        df_bounds = pd.concat([h_bound, m_bound, c_bound, v_bound]).drop_duplicates(subset=["name"])
+
+        bound_hover = [
+            f"<b>PEAK {r['stat_type']} (In Top {pct_str} Threshold: {r['stat_val']:,.0f})</b><br>"
+            f"<b>Profile:</b> {r['name']}<br>"
+            f"<b>DPS:</b> {r['dps']:,.0f}<br>"
+            f"--------------------<br>"
+            f"<b>Haste:</b> {r['haste']:.0f}<br>"
+            f"<b>Mastery:</b> {r['mastery']:.0f}<br>"
+            f"<b>Crit:</b> {r['crit']:.0f}<br>"
+            f"<b>Versatility:</b> {r['vers']:.0f}"
+            for _, r in df_bounds.iterrows()
+        ]
+
+        # Layer 1: Bright White Background Ring (High-contrast outer halo)
+        fig.add_trace(go.Scatter3d(
+            x=df_bounds["x"], y=df_bounds["y"], z=df_bounds["z"],
+            mode="markers",
+            marker=dict(
+                size=10.0,
+                color="#FFFFFF",
+                opacity=1.0
+            ),
+            hoverinfo="skip",
+            showlegend=False
+        ))
+
+        # Layer 2: Plasma DPS Gradient Core
+        fig.add_trace(go.Scatter3d(
+            x=df_bounds["x"], y=df_bounds["y"], z=df_bounds["z"],
+            mode="markers",
+            marker=dict(
+                size=6.5,
+                color=df_bounds["dps"],
+                colorscale="Plasma",
+                cmin=df["dps"].min(),
+                cmax=max_dps,
+                opacity=1.0
+            ),
+            text=bound_hover,
+            hoverinfo="text",
+            hovertemplate="%{text}<extra></extra>",
+            name="Threshold Outer Bounds"
+        ))
+
+    # 5. Tetrahedron Wireframe & Axis Vertex Labels
     vertices = {
         "HASTE": (0, 0, 1),
         "MASTERY": (2 * np.sqrt(2) / 3, 0, -1/3),
@@ -317,7 +374,6 @@ def create_tetrahedral_plot(df, threshold_percent=0.02):
                     clearInterval(countdownTimer);
                     countdownTimer = null;
 
-                    // Read current manual camera state before resuming
                     if (gd.layout && gd.layout.scene && gd.layout.scene.camera && gd.layout.scene.camera.eye) {
                         var eye = gd.layout.scene.camera.eye;
                         radius = Math.sqrt(eye.x * eye.x + eye.y * eye.y);
