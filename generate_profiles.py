@@ -59,7 +59,7 @@ actions+=/variable,name=ecl_burst_effective_cd,op=max,value=variable.next_on_use
 actions+=/variable,name=ca_burst_hold_remains,op=max,value=variable.ca_burst_effective_cd
 actions+=/variable,name=ecl_burst_hold_remains,op=max,value=variable.ecl_burst_effective_cd
 actions+=/variable,name=pre_burst_condition,op=reset,if=prev.incarnation_chosen_of_elune|prev.celestial_alignment|!variable.ca_burst_next&(prev.solar_eclipse|prev.lunar_eclipse)
-actions+=/variable,name=ca_burst_next,default=1,value=variable.ca_burst_effective_cd~<=variable.ecl_burst_hold_remains&((((variable.ca_burst_effective_cd+(variable.anchor_cd+variable.cds_synced)*gcd.max<?(buff.eclipse.remains<?cooldown.eclipse.remains)+buff.eclipse.duration+gcd.max)+buff.ca_inc.duration)~<=(variable.ca_burst_hold_remains+buff.ca_inc.duration+(variable.anchor_cd+variable.cds_synced)*gcd.max>?(buff.eclipse.remains<?cooldown.eclipse.full_recharge_time)+cooldown.eclipse.duration+gcd.max))|((variable.ca_burst_effective_cd+(variable.anchor_cd+variable.cds_synced)*gcd.max<?((buff.eclipse.remains<?cooldown.eclipse.remains)+buff.eclipse.duration+gcd.max<?cooldown.eclipse.full_recharge_time)+buff.eclipse.duration)+buff.ca_inc.duration~<=(variable.ca_burst_hold_remains+buff.ca_inc.duration+(variable.anchor_cd+variable.cds_synced)*gcd.max>?(buff.eclipse.remains<?cooldown.eclipse.full_recharge_time)+(cooldown.eclipse.duration+gcd.max)*2)))|!(variable.anchor_cd|talent.convoke_the_spirits)|variable.ca_control_remains<variable.ecl_burst_hold_remains+variable.anchor_cd_duration+talent.control_of_the_dream*((15-variable.fon_control_remains<?0)+(variable.fon_control_remains-variable.ecl_burst_hold_remains-variable.cds_synced*gcd.max<?0))+(1+variable.anchor_cd+variable.cds_synced)*gcd.max|fight_remains<variable.anchor_cd_remains+variable.anchor_cd_duration+10&fight_remains>variable.ca_burst_effective_cd+10|fight_remains<(cooldown.ca_inc.full_recharge_time<?(talent.convoke_the_spirits&!talent.elunes_guidance)*(variable.convoke_control_remains+cooldown.convoke_the_spirits.base_duration-talent.control_of_the_dream*15))+!(talent.convoke_the_spirits&!talent.elunes_guidance)*buff.ca_inc.duration+(talent.convoke_the_spirits&!talent.elunes_guidance)*action.convoke_the_spirits.execute_time+gcd.max&fight_remains>cooldown.potion.remains+buff.ca_inc.duration+5&cooldown.ca_inc.remains<cooldown.potion.remains&!(variable.ecl_burst_hold_remains>cooldown.eclipse.full_recharge_time+(1-variable.anchor_cd-variable.cds_synced)*gcd.max|variable.ecl_burst_effective_cd<cooldown.eclipse.full_recharge_time-buff.eclipse.duration-(1+variable.anchor_cd+variable.cds_synced)*gcd.max),if=!variable.ecl_counter&(prev.incarnation_chosen_of_elune|prev.celestial_alignment|!variable.opener&(prev.solar_eclipse|prev.lunar_eclipse))|prev.convoke_the_spirits
+actions+=/variable,name=ca_burst_next,default=1,value=variable.ca_burst_effective_cd~<=variable.ecl_burst_hold_remains&((((variable.ca_burst_effective_cd+(variable.anchor_cd+variable.cds_synced)*gcd.max<?(buff.eclipse.remains<?cooldown.eclipse.remains)+buff.eclipse.duration+gcd.max)+buff.ca_inc.duration)~<=(variable.ca_burst_hold_remains+buff.ca_inc.duration+(variable.anchor_cd+variable.cds_synced)*gcd.max>?(buff.eclipse.remains<?cooldown.eclipse.full_recharge_time)+cooldown.eclipse.duration+gcd.max))|((variable.ca_burst_effective_cd+(variable.anchor_cd+variable.cds_synced)*gcd.max<?((buff.eclipse.remains<?cooldown.eclipse.remains)+buff.eclipse.duration+gcd.max<?cooldown.eclipse.full_recharge_time)+buff.eclipse.duration)+buff.ca_inc.duration~<=(variable.ca_burst_hold_remains+buff.ca_inc.duration+(variable.anchor_cd+variable.cds_synced)*gcd.max>?(buff.eclipse.remains<?cooldown.eclipse.full_recharge_time)+(cooldown.eclipse.duration+gcd.max)*2)))|!(variable.anchor_cd|talent.convoke_the_spirits)|variable.ca_control_remains<variable.ecl_burst_hold_remains+variable.anchor_cd_duration+talent.control_of_the_dream*((15-variable.fon_control_remains<?0)+(variable.fon_control_remains-variable.ecl_burst_hold_remains-variable.cds_synced*gcd.max<?0))+(1+variable.anchor_cd+variable.cds_synced)*gcd.max|fight_remains<variable.anchor_cd_remains+variable.anchor_cd_duration+10&fight_remains>variable.ca_burst_effective_cd+10|fight_remains<(cooldown.ca_inc.full_recharge_time<?(talent.convoke_the_spirits&!talent.elunes_guidance)*(variable.convoke_control_remains+cooldown.convoke_the_spirits.base_duration-talent.control_of_the_dream*15))+!(talent.convoke_the_spirits&!talent.elunes_guidance)*buff.ca_inc.duration+(talent.convoke_the_spirits&!talent.elunes_guidance)*action.convoke_the_spirits.execute_time+gcd.max&fight_remains>cooldown.potion.remains+buff.ca_inc.duration+5&cooldown.ca_inc.remains<cooldown.potion.remains&!(variable.ecl_burst_hold_remains>cooldown.eclipse.full_recharge_time+(1-variable.anchor_cd-variable.cds_synced)*gcd.max|variable.ecl_burst_effective_cd<cooldown.eclipse.full_recharge_time-buff.eclipse.duration-(1+variable.anchor_cd-variable.cds_synced)*gcd.max),if=!variable.ecl_counter&(prev.incarnation_chosen_of_elune|prev.celestial_alignment|!variable.opener&(prev.solar_eclipse|prev.lunar_eclipse))|prev.convoke_the_spirits
 actions+=/variable,name=burst_hold_remains,value=variable.ca_burst_next*variable.ca_burst_hold_remains<?!variable.ca_burst_next*variable.ecl_burst_hold_remains
 actions+=/variable,name=burst_effective_cd,value=variable.ca_burst_next*variable.ca_burst_effective_cd<?!variable.ca_burst_next*variable.ecl_burst_effective_cd
 actions+=/variable,name=burst_hold_remains,op=min,value=variable.burst_effective_cd<?variable.next_on_use_trinket_remains,if=variable.on_use_trinket&!(variable.anchor_cd|talent.convoke_the_spirits)
@@ -167,6 +167,13 @@ actions.kotg_st_opener+=/berserking
 actions.kotg_st_opener+=/invoke_external_buff,name=power_infusion
 actions.kotg_st_opener+=/celestial_alignment,add_queue_lag=1
 
+# Global reset of gear stats to 0 so ONLY the profileset budget applies
+gear_haste_rating=0
+gear_mastery_rating=0
+gear_crit_rating=0
+gear_versatility_rating=0
+
+# Items
 head=enigmatic_dreamwatchers_somnolent_stare,id=271528,bonus_id=13692/13698/13750/13847/13848,gem_id=240983,enchant_id=8017,redirected_base_stats=271875
 neck=aqirbane_reliquary,id=268265,bonus_id=40/13335/13668/13708/13848,gem_id=240918/240892,content_tuning=883
 shoulders=enigmatic_dreamwatchers_plumage,id=271526,bonus_id=40/12854/13335/13694/13697,enchant_id=8001,content_tuning=807
@@ -193,33 +200,35 @@ threads=0
 iterations=10000
 """
 
-def generate_grid_file(output_filename="moonkin_grid.simc", budget=3049, step=100):
+def generate_4stat_grid(output_filename="moonkin_grid_4stat.simc", budget=3049, step=150):
     profiles = []
     count = 0
-    
-    # Grid across exactly 3,049 secondary stat points
-    for haste in range(100, budget - 200 + 1, step):
-        for mastery in range(100, budget - haste - 100 + 1, step):
-            crit = budget - haste - mastery
-            if crit < 100:
-                continue
-            
-            profile_name = f"H{haste}_M{mastery}_C{crit}"
-            
-            p_code = f'profileset."{profile_name}"+=gear_haste_rating={haste}\n'
-            p_code += f'profileset."{profile_name}"+=gear_mastery_rating={mastery}\n'
-            p_code += f'profileset."{profile_name}"+=gear_crit_rating={crit}\n'
-            
-            profiles.append(p_code)
-            count += 1
 
-    print(f"Success! Generated {count} profile variations for the budget of {budget} stats.")
-    
+    # Grid ranging from 0 up to full budget across all 4 stats
+    for haste in range(0, budget + 1, step):
+        for mastery in range(0, budget - haste + 1, step):
+            for crit in range(0, budget - haste - mastery + 1, step):
+                vers = budget - haste - mastery - crit
+                
+                # No 'if stat < 100: continue' check here!
+
+                profile_name = f"H{haste}_M{mastery}_C{crit}_V{vers}"
+
+                p_code = f'profileset."{profile_name}"+=gear_haste_rating={haste}\n'
+                p_code += f'profileset."{profile_name}"+=gear_mastery_rating={mastery}\n'
+                p_code += f'profileset."{profile_name}"+=gear_crit_rating={crit}\n'
+                p_code += f'profileset."{profile_name}"+=gear_versatility_rating={vers}\n'
+
+                profiles.append(p_code)
+                count += 1
+
+    print(f"Generated {count} 4-stat profile variations (including 0-stat bounds).")
+
     with open(output_filename, "w", encoding="utf-8") as f:
         f.write(GLOBAL_SETTINGS.strip() + "\n\n")
         f.write(FULL_PROFILE.strip() + "\n\n")
-        f.write("# --- REALISTIC STAT BUDGET MATRIX ---\n")
+        f.write("# --- 4-STAT BUDGET MATRIX ---\n")
         f.write("".join(profiles))
 
 if __name__ == "__main__":
-    generate_grid_file()
+    generate_4stat_grid()
