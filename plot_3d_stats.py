@@ -56,10 +56,12 @@ def create_tetrahedral_plot(df, threshold_percent=0.02):
         print("No valid data found!")
         return
 
+    pct_val = threshold_percent * 100
+    pct_str = f"{pct_val:.1f}%".rstrip('0').rstrip('.') if pct_val % 1 != 0 else f"{int(pct_val)}%"
+
     max_dps = df["dps"].max()
     cutoff_dps = max_dps * (1.0 - threshold_percent)
 
-    # Normalize coordinates to fractions (sum = 1)
     total_budget = df["haste"].iloc[0] + df["mastery"].iloc[0] + df["crit"].iloc[0] + df["vers"].iloc[0]
     
     h = df["haste"].values / total_budget
@@ -67,21 +69,30 @@ def create_tetrahedral_plot(df, threshold_percent=0.02):
     c = df["crit"].values / total_budget
     v = df["vers"].values / total_budget
 
-    # Map 4D simplex to 3D Cartesian coordinates (regular tetrahedron vertices)
     x = (2 * np.sqrt(2) / 3) * m - (np.sqrt(2) / 3) * c - (np.sqrt(2) / 3) * v
     y = (np.sqrt(6) / 3) * c - (np.sqrt(6) / 3) * v
     z = h - (1 / 3) * m - (1 / 3) * c - (1 / 3) * v
 
-    # Assign 3D coordinates BEFORE pulling top_sim
     df["x"], df["y"], df["z"] = x, y, z
     top_sim = df.loc[df["dps"].idxmax()]
 
-    df_top = df[df["dps"] >= cutoff_dps]
-    df_rest = df[df["dps"] < cutoff_dps]
+    df_top = df[df["dps"] >= cutoff_dps].copy()
+    df_rest = df[df["dps"] < cutoff_dps].copy()
 
     fig = go.Figure()
 
-    # 1. Background points (Small, semi-transparent)
+    # 1. Background points
+    rest_hover = [
+        f"<b>{r['name']}</b><br>"
+        f"<b>DPS:</b> {r['dps']:,.0f}<br>"
+        f"--------------------<br>"
+        f"<b>Haste:</b> {r['haste']:.0f}<br>"
+        f"<b>Mastery:</b> {r['mastery']:.0f}<br>"
+        f"<b>Crit:</b> {r['crit']:.0f}<br>"
+        f"<b>Versatility:</b> {r['vers']:.0f}"
+        for _, r in df_rest.iterrows()
+    ]
+
     fig.add_trace(go.Scatter3d(
         x=df_rest["x"], y=df_rest["y"], z=df_rest["z"],
         mode="markers",
@@ -94,12 +105,26 @@ def create_tetrahedral_plot(df, threshold_percent=0.02):
             opacity=0.25,
             showscale=False
         ),
-        text=[f"<b>{r['name']}</b><br>DPS: {r['dps']:,.0f}<br>H:{r['haste']:.0f} M:{r['mastery']:.0f} C:{r['crit']:.0f} V:{r['vers']:.0f}" for _, r in df_rest.iterrows()],
+        text=rest_hover,
         hoverinfo="text",
+        hovertemplate="%{text}<extra></extra>",
         name="Other Sims"
     ))
 
-    # 2. Top-performing cloud points (Larger, bright)
+    # 2. Top-performing cloud points
+    top_hover = [
+        f"<b>TOP {pct_str} PROFILE</b><br>"
+        f"<b>Profile:</b> {r['name']}<br>"
+        f"<b>DPS:</b> {r['dps']:,.0f}<br>"
+        f"<b>Delta to MAX:</b> -{(1 - r['dps']/max_dps)*100:.2f}%<br>"
+        f"--------------------<br>"
+        f"<b>Haste:</b> {r['haste']:.0f}<br>"
+        f"<b>Mastery:</b> {r['mastery']:.0f}<br>"
+        f"<b>Crit:</b> {r['crit']:.0f}<br>"
+        f"<b>Versatility:</b> {r['vers']:.0f}"
+        for _, r in df_top.iterrows()
+    ]
+
     fig.add_trace(go.Scatter3d(
         x=df_top["x"], y=df_top["y"], z=df_top["z"],
         mode="markers",
@@ -114,12 +139,13 @@ def create_tetrahedral_plot(df, threshold_percent=0.02):
             colorbar=dict(title="DPS"),
             showscale=True
         ),
-        text=[f"<b>TOP {threshold_percent*100:.1f}%</b><br>{r['name']}<br>DPS: {r['dps']:,.0f}" for _, r in df_top.iterrows()],
+        text=top_hover,
         hoverinfo="text",
-        name="Top Performers"
+        hovertemplate="%{text}<extra></extra>",
+        name=f"Top {pct_str} Performers"
     ))
 
-# 3. Highlight Peak Maximum with clean hover info and stats
+    # 3. Highlight Peak Maximum
     top_x, top_y, top_z = top_sim["x"], top_sim["y"], top_sim["z"]
     
     top_hover_text = (
@@ -143,10 +169,11 @@ def create_tetrahedral_plot(df, threshold_percent=0.02):
         ),
         text=[top_hover_text],
         hoverinfo="text",
+        hovertemplate="%{text}<extra></extra>",
         name="Absolute Peak"
     ))
 
-    # 4. Add Tetrahedron Wireframe & Axis Vertex Labels
+    # 4. Tetrahedron Wireframe & Axis Vertex Labels
     vertices = {
         "HASTE": (0, 0, 1),
         "MASTERY": (2 * np.sqrt(2) / 3, 0, -1/3),
@@ -154,7 +181,6 @@ def create_tetrahedral_plot(df, threshold_percent=0.02):
         "VERSATILITY": (-np.sqrt(2) / 3, -np.sqrt(6) / 3, -1/3)
     }
 
-    # Edges connecting all 4 vertices
     edges = [
         ("HASTE", "MASTERY"), ("HASTE", "CRIT"), ("HASTE", "VERSATILITY"),
         ("MASTERY", "CRIT"), ("MASTERY", "VERSATILITY"), ("CRIT", "VERSATILITY")
@@ -170,7 +196,6 @@ def create_tetrahedral_plot(df, threshold_percent=0.02):
             hoverinfo="skip"
         ))
 
-    # Vertex markers and labels
     vx, vy, vz, vlabels = [], [], [], []
     for name, pos in vertices.items():
         vx.append(pos[0])
@@ -188,21 +213,91 @@ def create_tetrahedral_plot(df, threshold_percent=0.02):
     ))
 
     fig.update_layout(
-        title=f"4-Stat Distribution Tetrahedron (Haste, Mastery, Crit, Vers)<br><sup>Max DPS: {max_dps:,.0f} | Budget: {total_budget:.0f}</sup>",
+        title=dict(
+            text=f"4-Stat Distribution Tetrahedron (Haste, Mastery, Crit, Vers)<br><sup>Max DPS: {max_dps:,.0f} | Budget: {total_budget:.0f} | Threshold (>= {100 - pct_val:.1f}% Max): {cutoff_dps:,.0f} DPS</sup>",
+            x=0.5,
+            y=0.97,
+            font=dict(size=20)
+        ),
         scene=dict(
             xaxis=dict(visible=False),
             yaxis=dict(visible=False),
             zaxis=dict(visible=False),
-            bgcolor="rgb(15, 15, 22)"
+            bgcolor="rgb(15, 15, 22)",
+            camera=dict(
+                eye=dict(x=1.3, y=1.3, z=0.9)
+            )
         ),
         template="plotly_dark",
-        margin=dict(l=0, r=0, b=0, t=60)
+        margin=dict(l=0, r=0, b=0, t=80)
     )
 
     output_html = "moonkin_4stat_tetrahedron.html"
-    fig.write_html(output_html)
-    print(f"Saved 3D tetrahedral plot as: {output_html}")
-    webbrowser.open("file://" + os.path.realpath(output_html))
+    
+    html_content = fig.to_html(include_plotlyjs="cdn", full_html=True)
+
+    # Injected JavaScript logic that remembers manual camera position and zoom distance
+    auto_spin_js = """
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var gd = document.querySelector('.plotly-graph-div');
+        if (!gd) return;
+
+        var radius = 1.8;
+        var theta = Math.atan2(1.3, 1.3); // Initial angle from x=1.3, y=1.3
+        var currentZ = 0.9;
+        var isUserInteracting = false;
+        var resumeTimeout = null;
+
+        function rotateCamera() {
+            if (isUserInteracting) return;
+            theta += 0.005;
+            var x = radius * Math.cos(theta);
+            var y = radius * Math.sin(theta);
+            
+            Plotly.relayout(gd, {
+                'scene.camera.eye': {x: x, y: y, z: currentZ}
+            });
+        }
+
+        setInterval(rotateCamera, 30);
+
+        function handleUserInteraction() {
+            isUserInteracting = true;
+            if (resumeTimeout) clearTimeout(resumeTimeout);
+            
+            // Wait 8 seconds of inactivity before resuming
+            resumeTimeout = setTimeout(function() {
+                // Read camera eye position after manual interaction stops
+                if (gd.layout && gd.layout.scene && gd.layout.scene.camera && gd.layout.scene.camera.eye) {
+                    var eye = gd.layout.scene.camera.eye;
+                    radius = Math.sqrt(eye.x * eye.x + eye.y * eye.y);
+                    theta = Math.atan2(eye.y, eye.x);
+                    currentZ = eye.z;
+                }
+                isUserInteracting = false;
+            }, 8000);
+        }
+
+        gd.addEventListener('mousedown', handleUserInteraction);
+        gd.addEventListener('wheel', handleUserInteraction);
+        gd.addEventListener('touchstart', handleUserInteraction);
+    });
+    </script>
+    </body>
+    """
+
+    html_content = html_content.replace("</body>", auto_spin_js)
+
+    with open(output_html, "w", encoding="utf-8") as f:
+        f.write(html_content)
+
+    print(f"Saved 3D tetrahedral plot with smooth position-memory auto-rotation as: {output_html}")
+    
+    try:
+        webbrowser.open("file://" + os.path.realpath(output_html))
+    except Exception:
+        pass
 
 if __name__ == "__main__":
     df_results = parse_simc_4stat_json("results.json")

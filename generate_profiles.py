@@ -200,17 +200,27 @@ threads=0
 iterations=10000
 """
 
-def generate_4stat_grid(output_filename="moonkin_grid_4stat.simc", budget=3049, step=150):
+def generate_4stat_grid_dynamic(output_filename="moonkin_grid_4stat.simc", budget=3049, steps_per_axis=20):
+    step = round(budget / steps_per_axis)
+    
     profiles = []
     count = 0
 
-    # Grid ranging from 0 up to full budget across all 4 stats
-    for haste in range(0, budget + 1, step):
-        for mastery in range(0, budget - haste + 1, step):
-            for crit in range(0, budget - haste - mastery + 1, step):
-                vers = budget - haste - mastery - crit
-                
-                # No 'if stat < 100: continue' check here!
+    for h_idx in range(steps_per_axis + 1):
+        haste = min(h_idx * step, budget)
+        
+        rem_after_h = budget - haste
+        m_steps = round(rem_after_h / step) if step > 0 else 0
+        
+        for m_idx in range(m_steps + 1):
+            mastery = min(m_idx * step, rem_after_h)
+            
+            rem_after_m = rem_after_h - mastery
+            c_steps = round(rem_after_m / step) if step > 0 else 0
+            
+            for c_idx in range(c_steps + 1):
+                crit = min(c_idx * step, rem_after_m)
+                vers = rem_after_m - crit
 
                 profile_name = f"H{haste}_M{mastery}_C{crit}_V{vers}"
 
@@ -222,13 +232,32 @@ def generate_4stat_grid(output_filename="moonkin_grid_4stat.simc", budget=3049, 
                 profiles.append(p_code)
                 count += 1
 
-    print(f"Generated {count} 4-stat profile variations (including 0-stat bounds).")
+    # --- Console Output: Grid Summary & Outer Edges ---
+    print("=" * 60)
+    print(f"GRID GENERATION SUMMARY (Budget: {budget} | Dynamic Step: {step})")
+    print("=" * 60)
+    print(f"Total Profiles Generated: {count}\n")
+
+    print("--- 100% STAT VERTICES (Corners) ---")
+    print(f"  • Haste Peak:       H={budget}, M=0, C=0, V=0")
+    print(f"  • Mastery Peak:     H=0, M={budget}, C=0, V=0")
+    print(f"  • Crit Peak:        H=0, M=0, C={budget}, V=0")
+    print(f"  • Versatility Peak: H=0, M=0, C=0, V={budget}\n")
+
+    print("--- TETRAHEDRON OUTER EDGES (Boundaries) ---")
+    print(f"  1. Haste <-> Mastery:     H={budget}->0 | M=0->{budget} | C=0 | V=0")
+    print(f"  2. Haste <-> Crit:        H={budget}->0 | M=0 | C=0->{budget} | V=0")
+    print(f"  3. Haste <-> Versatility: H={budget}->0 | M=0 | C=0 | V=0->{budget}")
+    print(f"  4. Mastery <-> Crit:      H=0 | M={budget}->0 | C=0->{budget} | V=0")
+    print(f"  5. Mastery <-> Vers:      H=0 | M={budget}->0 | C=0 | V=0->{budget}")
+    print(f"  6. Crit <-> Versatility:  H=0 | M=0 | C={budget}->0 | V=0->{budget}")
+    print("=" * 60)
 
     with open(output_filename, "w", encoding="utf-8") as f:
         f.write(GLOBAL_SETTINGS.strip() + "\n\n")
         f.write(FULL_PROFILE.strip() + "\n\n")
-        f.write("# --- 4-STAT BUDGET MATRIX ---\n")
+        f.write("# --- 4-STAT DYNAMIC BUDGET MATRIX ---\n")
         f.write("".join(profiles))
 
 if __name__ == "__main__":
-    generate_4stat_grid()
+    generate_4stat_grid_dynamic(budget=3049, steps_per_axis=20)

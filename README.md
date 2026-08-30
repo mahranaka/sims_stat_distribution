@@ -14,17 +14,17 @@ View the live, interactive tetrahedral plot directly in your browser:
 ## ⚠️ Disclaimer
 
 * **Base Profile:** The example profile embedded in the grid generator uses the top-simming race profile from Dreamgrove's official race sims ([dreamgrove.gg/static/sims/racesims2m.htm](https://www.dreamgrove.gg/static/sims/racesims2m.htm)).
-* **4-Stat Budget Matrix:** Unlike traditional 3-stat ternary plots, this script evaluates the complete secondary stat trade-off across **Haste**, **Mastery**, **Crit**, and **Versatility** simultaneously within a constant stat budget.
+* **4-Stat Budget Matrix:** Evaluates secondary stat trade-offs across **Haste**, **Mastery**, **Crit**, and **Versatility** simultaneously within a constant stat budget.
 
 ---
 
 ## 🌟 Features
 
-* **4D Grid Generation (`generate_grid.py`):** Automatically creates a `.simc` file featuring a full 4-stat secondary budget matrix (Haste, Mastery, Crit, Versatility) with configurable step sizes.
-* **JSON Parsing (`plot_3d_stats.py`):** Robust parser for SimulationCraft JSON results (`sim.profilesets.results`), extracting 4-stat variations and mean DPS outputs.
-* **Interactive Tetrahedral Visualization:** Projects 4D stat compositions ($Haste + Mastery + Crit + Versatility = \text{Constant Budget}$) into a 3D Cartesian tetrahedron space using Plotly.
-* **Top-Performer Highlighting:** Color-codes the entire stat volume via the **Plasma** palette while scaling and highlighting the top-performing stat zones (e.g., Top 2% DPS).
-* **Wireframe Axes & Custom Hover Tooltips:** Renders a translucent 3D wireframe connecting all 4 stat vertices ($100\%$ markers) and detailed hover cards showing exact stat breakdowns, DPS, and peak markers.
+* **Dynamic Grid Generation (`generate_grid.py`):** Automatically creates a `.simc` file with a 4-stat secondary budget matrix, calculating dynamic step sizes so stat combinations reach exact $0$ boundary values.
+* **JSON Parsing (`plot_3d_stats.py`):** Extracts profile stat variations and mean DPS outputs from SimulationCraft JSON results (`sim.profilesets.results`).
+* **Interactive Tetrahedral Visualization:** Maps 4D stat compositions ($Haste + Mastery + Crit + Versatility = \text{Constant Budget}$) into a 3D Cartesian tetrahedron space using Plotly.
+* **Smooth Camera Auto-Rotation:** Features automatic camera orbiting in the output HTML that pauses during manual interaction and seamlessly resumes rotation from your new viewpoint after 8 seconds of inactivity.
+* **Top-Performer Highlighting & Tooltips:** Color-codes points via the **Plasma** palette, highlights the top-performing stat threshold, and displays custom hover cards with exact stat breakdowns ($H, M, C, V$) and DPS metrics.
 
 ---
 
@@ -61,9 +61,9 @@ The resulting `moonkin_4stat_tetrahedron.html` will automatically open in your d
 
 ## ⚙️ Configuration & Customization
 
-* **Stat Budget & Step Size:** You can adjust the secondary stat budget and step size inside `generate_grid.py`:
+* **Stat Budget & Steps:** Adjust the secondary stat budget and target division steps inside `generate_grid.py`:
   
-      generate_4stat_grid(output_filename="moonkin_grid_4stat.simc", budget=3000, step=150)
+      generate_4stat_grid_dynamic(output_filename="moonkin_grid_4stat.simc", budget=3049, steps_per_axis=20)
 
 * **Top Performance Threshold:** Adjust the highlighted top-performer zone percentage in `plot_3d_stats.py`:
   
@@ -76,6 +76,6 @@ The resulting `moonkin_4stat_tetrahedron.html` will automatically open in your d
 
 The output is an interactive dark-themed 3D Plotly HTML file featuring:
 * A 3D tetrahedral wireframe marking $100\%$ allocations for **Haste**, **Mastery**, **Crit**, and **Versatility**.
-* A full color-gradient point cloud across the interior volume based on the **Plasma** color palette.
-* Gold diamond marker highlighting the absolute peak DPS configuration.
-* Clean hover tooltips displaying full stat values ($H, M, C, V$) and exact DPS numbers.
+* A color-gradient point cloud across the interior volume based on the **Plasma** color palette.
+* A gold diamond marker indicating the absolute peak DPS configuration.
+* Hover tooltips displaying exact stat values ($H, M, C, V$) and DPS figures.
