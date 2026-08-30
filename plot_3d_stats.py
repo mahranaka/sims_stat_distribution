@@ -81,10 +81,11 @@ def create_tetrahedral_plot(df, threshold_percent=0.02):
 
     fig = go.Figure()
 
-    # 1. Background points
+    # 1. Background points (Updated with Delta to MAX)
     rest_hover = [
         f"<b>{r['name']}</b><br>"
         f"<b>DPS:</b> {r['dps']:,.0f}<br>"
+        f"<b>Delta to MAX:</b> -{(1 - r['dps']/max_dps)*100:.2f}%<br>"
         f"--------------------<br>"
         f"<b>Haste:</b> {r['haste']:.0f}<br>"
         f"<b>Mastery:</b> {r['mastery']:.0f}<br>"
@@ -173,7 +174,7 @@ def create_tetrahedral_plot(df, threshold_percent=0.02):
         name="Absolute Peak"
     ))
 
-# 4. Outermost Stat Boundary Points (Layered for High-Contrast White Borders)
+    # 4. Outermost Stat Boundary Points (Layered for High-Contrast White Borders)
     if not df_top.empty:
         max_h_val = df_top["haste"].max()
         max_m_val = df_top["mastery"].max()
@@ -191,6 +192,7 @@ def create_tetrahedral_plot(df, threshold_percent=0.02):
             f"<b>PEAK {r['stat_type']} (In Top {pct_str} Threshold: {r['stat_val']:,.0f})</b><br>"
             f"<b>Profile:</b> {r['name']}<br>"
             f"<b>DPS:</b> {r['dps']:,.0f}<br>"
+            f"<b>Delta to MAX:</b> -{(1 - r['dps']/max_dps)*100:.2f}%<br>"
             f"--------------------<br>"
             f"<b>Haste:</b> {r['haste']:.0f}<br>"
             f"<b>Mastery:</b> {r['mastery']:.0f}<br>"
@@ -199,7 +201,7 @@ def create_tetrahedral_plot(df, threshold_percent=0.02):
             for _, r in df_bounds.iterrows()
         ]
 
-        # Layer 1: Bright White Background Ring (High-contrast outer halo)
+        # Layer 1: Bright White Background Ring
         fig.add_trace(go.Scatter3d(
             x=df_bounds["x"], y=df_bounds["y"], z=df_bounds["z"],
             mode="markers",

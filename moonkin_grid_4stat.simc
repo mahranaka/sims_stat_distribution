@@ -1,8 +1,17 @@
-fight_style=Patchwerk
+# Raid Buffs
+optimal_raid=1
+
+# Simulation
 max_time=300
-fixed_time=1
-threads=0
-iterations=10000
+vary_combat_length=0.2
+fight_style=Patchwerk
+desired_targets=1
+target_error=0.1
+iterations=100000
+single_actor_batch=1
+report_details=1
+optimize_expressions=1
+calculate_scale_factors=0
 
 # Base Actor
 # Raidbots-Generated Simc Input - "Combo 58" from "https://www.raidbots.com/simbot/report/dYZQnvmLmio5PosJndXF8p"
@@ -33,103 +42,11 @@ trinket2=,id=270164,bonus_id=40/13335/12854,content_tuning=883
 main_hand=,id=271092,enchant_id=8689,bonus_id=13848/13662
 off_hand=,id=245769,bonus_id=13836/13751/9627/13771/8960,crafted_stats=32/49,crafting_quality=5
 
-### Gear in Bags (Reconstructed by Top Gear, may not be perfect)
-# neck=,id=268265,gem_id=240890/240918,bonus_id=13708/13668/40/13335/13848,content_tuning=883
-# trinket1=,id=270167,bonus_id=4800/4786/12854
-# main_hand=,id=271092,enchant_id=7983,bonus_id=13848/13662
-# neck=,id=268265,gem_id=240918/240892,bonus_id=13708/13668/40/13335/13848,content_tuning=883
-# shoulder=,id=271526,enchant_id=8001,bonus_id=13694/13697/12854/13335/40,content_tuning=807
-# wrist=,id=271524,gem_id=240908,bonus_id=12854/13335/40/13696/13750,content_tuning=807
-# finger2=,id=251513,enchant_id=7967,gem_id=240898,bonus_id=8960/12214/13836/13751/9627,crafting_quality=5
-# main_hand=,id=271092,enchant_id=8041,bonus_id=13848/13662
-# head=,id=271528,enchant_id=8017,gem_id=240983,bonus_id=13692/13698/13847/13848/13750,redirected_base_stats=271875
-# wrist=,id=271524,gem_id=240898,bonus_id=12854/13335/40/13696/13750,content_tuning=807
-# shoulder=,id=244572,enchant_id=8001,bonus_id=12214/13836/13751/9627/8960/12384,crafted_stats=32/49,crafting_quality=5
-# wrist=,id=244576,gem_id=240908,bonus_id=12214/13667/12497/13751/8960/12384/8791/13836/12666,content_tuning=3615,crafted_stats=32/40,crafting_quality=5
-# finger2=,id=252258,enchant_id=7967,gem_id=240898,bonus_id=13668/12854/13662
-# off_hand=,id=251191,bonus_id=12854/13662
-# neck=,id=268265,gem_id=240898/240898,bonus_id=13708/13668/40/13335/13848,content_tuning=883
-# finger2=,id=251513,enchant_id=7967,gem_id=240898,bonus_id=8960/13836/13751/9627,crafting_quality=5
-# trinket1=,id=250215,bonus_id=12854/13440/40,content_tuning=883
-# main_hand=,id=271092,enchant_id=7981,bonus_id=13848/13662
-# head=,id=271528,enchant_id=8017,gem_id=240898,bonus_id=13692/13698/13847/13848/13750,redirected_base_stats=271875
-# neck=,id=268265,gem_id=240967/240908,bonus_id=13708/13668/40/13335/13848,content_tuning=883
-# wrist=,id=244576,gem_id=240918,bonus_id=12214/13667/12497/13751/8960/12384/8791/13836/12666,content_tuning=3615,crafted_stats=32/40,crafting_quality=5
-# shoulder=,id=244572,enchant_id=8001,bonus_id=13836/13751/9627/8960/12384,crafted_stats=32/49,crafting_quality=5
-# shoulder=,id=271526,enchant_id=8001,bonus_id=13694/13697/12854,redirected_base_stats=251223
-# off_hand=,id=245769,bonus_id=12214/13836/13751/9627/12693/8960,crafted_stats=32/49,crafting_quality=5
-# shoulder=,id=271526,enchant_id=8001,bonus_id=13694/13697/12854,redirected_base_stats=268246
-# chest=,id=193764,enchant_id=7987,bonus_id=12854/13662
-# hands=,id=271529,bonus_id=13691/13697/12854,redirected_base_stats=159337
-# feet=,id=271530,enchant_id=7963,bonus_id=12854/13335/40,content_tuning=807
-# finger2=,id=158366,enchant_id=7967,gem_id=240898,bonus_id=12854/13662/13750
-# head=,id=271528,enchant_id=8017,bonus_id=13692/13698/13847/12854,redirected_base_stats=271875
-# waist=,id=268256,bonus_id=13848/13662
-# head=,id=271875,bonus_id=40/13696/13662/13335/13848/13847,content_tuning=883
-# neck=,id=268265,gem_id=240967/240908,bonus_id=40/13668/13335/13848/13708,content_tuning=883
-# shoulder=,id=271526,enchant_id=8031,bonus_id=12854/13335/13694/40/13697,content_tuning=807
-# back=,id=271523,bonus_id=12854/13335/40,content_tuning=807
-# chest=,id=271531,enchant_id=7987,bonus_id=12854/13335/13690/40/13698,content_tuning=807
-# shirt=,id=268274,content_tuning=3606
-# tabard=,id=210469,content_tuning=2699
-# hands=,id=271529,bonus_id=12854/13335/13691/40/13697,content_tuning=807
-# waist=,id=271525,bonus_id=12854/13335/40/13696,content_tuning=807
-# legs=,id=271527,enchant_id=7935,bonus_id=12854/13335/13693/40/13698,content_tuning=807
-# finger1=,id=268249,enchant_id=7967,gem_id=240898,bonus_id=40/13668/13335/12854,content_tuning=883
-# finger2=,id=240949,enchant_id=7967,gem_id=240892,bonus_id=12214/13667/12497/13751/8791/13835,content_tuning=3615,crafted_stats=36/40,crafting_quality=5
-# main_hand=,id=245770,enchant_id=7981,bonus_id=12214/13667/12497/13751/12693/8960/8791/13836,content_tuning=3615,crafted_stats=36/40,crafting_quality=5
-# head=,id=271528,enchant_id=8017,bonus_id=12854/13335/13692/40/13696/13698,content_tuning=807
-# neck=,id=240950,gem_id=240983,bonus_id=12214/13667/12497/13751/8791/13836,content_tuning=3615,crafted_stats=36/40,crafting_quality=5
-# neck=,id=250247,gem_id=240898/240898,bonus_id=6652/13668/13335/12806
-# wrist=,id=271524,bonus_id=12854/13335/40/13696,content_tuning=807
-# waist=,id=249314,bonus_id=6652/12667/13577/13335/12802
-# feet=,id=250026,enchant_id=7963,bonus_id=12806/6652/13335/3174
-# finger1=,id=240949,bonus_id=12214/13667/12497/13751/8791/13835,content_tuning=3615,crafted_stats=40/49,crafting_quality=5
-# finger1=,id=270575,enchant_id=7967,gem_id=240908,bonus_id=12840/13658/13452,content_tuning=483
-# finger1=,id=251217,enchant_id=7967,gem_id=240898,bonus_id=13440/6652/13668/12699/12806
-# finger1=,id=193708,enchant_id=7967,gem_id=240898,bonus_id=13440/6652/13668/12699/12806
-# finger1=,id=270577,enchant_id=7967,gem_id=240908,bonus_id=12840/13658/13452,content_tuning=483
-# trinket1=,id=193757,bonus_id=12854/13440/40,content_tuning=883
-# trinket1=,id=158368,bonus_id=12854/13440/40,content_tuning=883
-# trinket1=,id=270168,bonus_id=40/13335/13848,content_tuning=883
-# trinket1=,id=274495,bonus_id=12841/6652,content_tuning=883
-# trinket1=,id=250214,bonus_id=12854/13440/40,content_tuning=883
-# trinket1=,id=270169,bonus_id=40/13335/13848,content_tuning=883
-# trinket1=,id=250243,bonus_id=12854/13440/40,content_tuning=883
-# trinket1=,id=250225,bonus_id=12854/13440/40,content_tuning=883
-# trinket1=,id=250255,bonus_id=12854/13440/40,content_tuning=883
-# trinket1=,id=274497,bonus_id=12841/6652,content_tuning=883
-# trinket1=,id=250244,bonus_id=12854/13440/40,content_tuning=883
-# trinket1=,id=250245,bonus_id=12854/13440/40,content_tuning=883
-# trinket1=,id=250248,bonus_id=12854/13440/40,content_tuning=883
-# trinket1=,id=250224,bonus_id=12854/13440/40,content_tuning=883
-# trinket1=,id=270170,bonus_id=40/13335/12854,content_tuning=883
-# trinket1=,id=270169,bonus_id=40/13335/13848,content_tuning=883
-# trinket1=,id=250228,bonus_id=12854/13440/40,content_tuning=883
-# trinket1=,id=274495,bonus_id=12841/6652,content_tuning=883
-# trinket1=,id=273649,bonus_id=12854/13440/40,content_tuning=883
-# trinket1=,id=270606,bonus_id=12840/13658/13452,content_tuning=883
-# trinket1=,id=270161,bonus_id=40/13335/12854,content_tuning=883
-# trinket1=,id=270169,bonus_id=40/13335/13848,content_tuning=883
-# trinket1=,id=273794,bonus_id=12854/13440/40,content_tuning=883
-# trinket1=,id=270175,bonus_id=40/13335/13848,content_tuning=883
-# trinket1=,id=274499,bonus_id=12841/6652,content_tuning=883
-# trinket1=,id=274493,bonus_id=12841/6652,content_tuning=883
-# trinket1=,id=270604,bonus_id=12840/13658/13452,content_tuning=883
-# trinket1=,id=270602,bonus_id=12840/13658/13452,content_tuning=883
-# trinket1=,id=250259,bonus_id=12854/13440/40,content_tuning=883
-# trinket1=,id=274498,bonus_id=12841/6652,content_tuning=883
-# trinket1=,id=251789,bonus_id=12841/6652,content_tuning=883
-# main_hand=,id=128858,bonus_id=722,content_tuning=642
-# main_hand=,id=135582,content_tuning=642
-# main_hand=,id=270827,bonus_id=12840/13658/13452,content_tuning=483
-# main_hand=,id=249283,enchant_id=7981,bonus_id=40/13335/13654
-# main_hand=,id=251201,enchant_id=8039,bonus_id=13440/6652/12701/13654
-# main_hand=,id=249302,enchant_id=8039,bonus_id=6652/13335/13654
 name="Base 12.1"
 
 # Consumables
 potion=potion_of_recklessness_2
+flask=disabled
 
 # Expansion Options
 temporary_enchant=
