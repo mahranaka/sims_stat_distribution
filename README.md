@@ -1,6 +1,6 @@
 # sims_stat_distribution
 
-A Python-based workflow designed for **World of Warcraft (Balance Druid / Moonkin)** to generate secondary stat budget matrices, execute SimulationCraft runs, and visualize the resulting DPS distributions using interactive 3D tetrahedral (simplex) plots.
+A Python-based workflow designed for **World of Warcraft (Balance Druid / Moonkin) - can be used for any dps/tank spec - need to change generate_profiles.py** to generate secondary stat budget matrices, execute SimulationCraft runs, and visualize the resulting DPS distributions using interactive 3D tetrahedral (simplex) plots.
 
 ---
 
