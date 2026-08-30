@@ -29,7 +29,7 @@ View the live, interactive ternary plot directly in your browser:
 
 ## 🛠️ Requirements
 
-Install the necessary dependencies using `pip`:
+Install the necessary Python dependencies using `pip`:
 
     pip install pandas numpy plotly scipy
 
@@ -46,6 +46,8 @@ Run the grid generator script to build `moonkin_grid.simc` containing your base 
 Execute the generated file in SimulationCraft (CLI or GUI) and output the results as a JSON file named `results.json`:
 
     simc moonkin_grid.simc json2=results.json
+
+> **Note:** [SimulationCraft](https://www.simulationcraft.org/) must be installed and added to your system's `PATH` environment variable for the `simc` command to work in your terminal. Alternatively, you can run the generated `.simc` file directly through the SimulationCraft GUI or specify the full path to `simc.exe`.
 
 ### 3. Generate the Interactive Plot
 Process the simulation results and generate the interactive HTML ternary plot:
