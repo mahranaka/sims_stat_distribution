@@ -13,7 +13,7 @@ View the live, interactive ternary plot directly in your browser:
 
 ## ⚠️ Disclaimer
 
-* **Base Profile:** The example profile embedded in the grid generator uses the top-simming race profile from Dreamgrove's official 2-minute race sims ([dreamgrove.gg/static/sims/racesims2m.htm](https://www.dreamgrove.gg/static/sims/racesims2m.htm)).
+* **Base Profile:** The example profile embedded in the grid generator uses the top-simming race profile from Dreamgrove's official race sims ([dreamgrove.gg/static/sims/racesims2m.htm](https://www.dreamgrove.gg/static/sims/racesims2m.htm)).
 * **Versatility Neglected:** Versatility is intentionally excluded/zeroed out in this matrix to focus exclusively on evaluating the trade-offs and distribution ratios across Haste, Mastery, and Crit.
 
 ---
