@@ -204,10 +204,13 @@ def generate_4stat_grid(output_filename="moonkin_grid_4stat.simc", budget=3049, 
     profiles = []
     count = 0
 
+    # Grid ranging from 0 up to full budget across all 4 stats
     for haste in range(0, budget + 1, step):
         for mastery in range(0, budget - haste + 1, step):
             for crit in range(0, budget - haste - mastery + 1, step):
                 vers = budget - haste - mastery - crit
+                
+                # No 'if stat < 100: continue' check here!
 
                 profile_name = f"H{haste}_M{mastery}_C{crit}_V{vers}"
 
@@ -219,7 +222,7 @@ def generate_4stat_grid(output_filename="moonkin_grid_4stat.simc", budget=3049, 
                 profiles.append(p_code)
                 count += 1
 
-    print(f"Generated {count} 4-stat profile variations for a budget of {budget} stats.")
+    print(f"Generated {count} 4-stat profile variations (including 0-stat bounds).")
 
     with open(output_filename, "w", encoding="utf-8") as f:
         f.write(GLOBAL_SETTINGS.strip() + "\n\n")
