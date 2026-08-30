@@ -23,7 +23,7 @@ View the live, interactive tetrahedral plot directly in your browser:
 * **Dynamic Grid Generation (`generate_profiles.py`):** Automatically creates a `.simc` file with a 4-stat secondary budget matrix, calculating dynamic step sizes so stat combinations reach exact $0$ boundary values.
 * **JSON Parsing (`plot_3d_stats.py`):** Extracts profile stat variations and mean DPS outputs from SimulationCraft JSON results (`sim.profilesets.results`).
 * **Interactive Tetrahedral Visualization:** Maps 4D stat compositions ($Haste + Mastery + Crit + Versatility = \text{Constant Budget}$) into a 3D Cartesian tetrahedron space using Plotly.
-* **Smooth Camera Auto-Rotation:** Features automatic camera orbiting in the output HTML that pauses during manual interaction and seamlessly resumes rotation from your new viewpoint after 8 seconds of inactivity.
+* **Smooth Camera Auto-Rotation:** Features automatic camera orbiting in the output HTML that pauses during manual interaction and seamlessly resumes rotation from your new viewpoint after 20 seconds of inactivity.
 * **Top-Performer Highlighting & Tooltips:** Color-codes points via the **Plasma** palette, highlights the top-performing stat threshold, and displays custom hover cards with exact stat breakdowns ($H, M, C, V$) and DPS metrics.
 
 ---
