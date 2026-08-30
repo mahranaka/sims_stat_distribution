@@ -13,7 +13,7 @@ View the live, interactive tetrahedral plot directly in your browser:
 
 ## ⚠️ Disclaimer
 
-* **Base Profile:** The example profile embedded in the grid generator uses the following ([top sim by clankz.] (https://www.raidbots.com/simbot/report/iEvzkAYC8XCPr1JrAVNXw5)) with a total step budget of 3236 (flask removed and turned into stat budget).
+* **Base Profile:** The example profile embedded in the grid generator uses the [top sim by clankz](https://www.raidbots.com/simbot/report/iEvzkAYC8XCPr1JrAVNXw5) with a total stat budget of 3236 (flask removed and converted into stat budget).
 * **4-Stat Budget Matrix:** Evaluates secondary stat trade-offs across **Haste**, **Mastery**, **Crit**, and **Versatility** simultaneously within a constant stat budget.
 
 ---
