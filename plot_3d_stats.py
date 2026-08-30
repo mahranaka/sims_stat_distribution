@@ -6,7 +6,7 @@ import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
 
-def parse_simc_json(json_path="results.json"):
+def parse_simc_4stat_json(json_path="results.json"):
     print(f"Loading {json_path}...")
     if not os.path.exists(json_path):
         print(f"ERROR: File '{json_path}' not found!")
@@ -15,12 +15,13 @@ def parse_simc_json(json_path="results.json"):
     with open(json_path, "r", encoding="utf-8") as f:
         data_json = json.load(f)
 
-    sim_data = data_json.get("sim", {})
-    profilesets = sim_data.get("profilesets", {})
-    results_list = profilesets.get("results", [])
+    results_list = data_json.get("sim", {}).get("profilesets", {}).get("results", [])
 
     rows = []
-    pattern = re.compile(r"H(?:aste)?_?(\d+)[_-]?M(?:astery)?_?(\d+)[_-]?C(?:rit)?_?(\d+)", re.IGNORECASE)
+    pattern = re.compile(
+        r"H(?:aste)?_?(\d+)[_-]?M(?:astery)?_?(\d+)[_-]?C(?:rit)?_?(\d+)[_-]?V(?:ers)?_?(\d+)",
+        re.IGNORECASE
+    )
 
     for item in results_list:
         if not isinstance(item, dict):
@@ -33,6 +34,7 @@ def parse_simc_json(json_path="results.json"):
             haste = float(match.group(1))
             mastery = float(match.group(2))
             crit = float(match.group(3))
+            vers = float(match.group(4))
             dps = float(item.get("mean", 0))
 
             if dps > 0:
@@ -41,165 +43,167 @@ def parse_simc_json(json_path="results.json"):
                     "haste": haste,
                     "mastery": mastery,
                     "crit": crit,
+                    "vers": vers,
                     "dps": dps
                 })
 
     df = pd.DataFrame(rows)
-    print(f"Successfully extracted {len(df)} stat profiles.")
+    print(f"Successfully extracted {len(df)} 4-stat profiles.")
     return df
 
-def create_ternary_stat_plot(df, threshold_percent=0.02):
+def create_tetrahedral_plot(df, threshold_percent=0.02):
     if df.empty:
-        print("No valid data found in DataFrame!")
+        print("No valid data found!")
         return
-        
-    # Dynamische Prozent-Labels erzeugen
-    pct_val = threshold_percent * 100
-    pct_str = f"{pct_val:.1f}%".rstrip('0').rstrip('.') if pct_val % 1 != 0 else f"{int(pct_val)}%"
-    
+
     max_dps = df["dps"].max()
     cutoff_dps = max_dps * (1.0 - threshold_percent)
-    
-    top_sim = df.loc[df["dps"].idxmax()]
-    total_budget = df["mastery"].iloc[0] + df["haste"].iloc[0] + df["crit"].iloc[0]
 
-    df_top = df[df["dps"] >= cutoff_dps].copy()
-    df_rest = df[df["dps"] < cutoff_dps].copy()
+    # Normalize coordinates to fractions (sum = 1)
+    total_budget = df["haste"].iloc[0] + df["mastery"].iloc[0] + df["crit"].iloc[0] + df["vers"].iloc[0]
+    
+    h = df["haste"].values / total_budget
+    m = df["mastery"].values / total_budget
+    c = df["crit"].values / total_budget
+    v = df["vers"].values / total_budget
+
+    # Map 4D simplex to 3D Cartesian coordinates (regular tetrahedron vertices)
+    x = (2 * np.sqrt(2) / 3) * m - (np.sqrt(2) / 3) * c - (np.sqrt(2) / 3) * v
+    y = (np.sqrt(6) / 3) * c - (np.sqrt(6) / 3) * v
+    z = h - (1 / 3) * m - (1 / 3) * c - (1 / 3) * v
+
+    # Assign 3D coordinates BEFORE pulling top_sim
+    df["x"], df["y"], df["z"] = x, y, z
+    top_sim = df.loc[df["dps"].idxmax()]
+
+    df_top = df[df["dps"] >= cutoff_dps]
+    df_rest = df[df["dps"] < cutoff_dps]
 
     fig = go.Figure()
 
-    # 1. Base points (Hell & gut sichtbar im Hintergrund)
-    fig.add_trace(go.Scatterternary(
+    # 1. Background points (Small, semi-transparent)
+    fig.add_trace(go.Scatter3d(
+        x=df_rest["x"], y=df_rest["y"], z=df_rest["z"],
         mode="markers",
-        a=df_rest["mastery"],
-        b=df_rest["haste"],
-        c=df_rest["crit"],
         marker=dict(
-            symbol="circle",
+            size=3,
             color=df_rest["dps"],
             colorscale="Plasma",
             cmin=df["dps"].min(),
             cmax=max_dps,
-            size=7,
-            opacity=0.85,
+            opacity=0.25,
             showscale=False
         ),
-        text=[f"<b>Profile:</b> {row['name']}<br><b>DPS:</b> {row['dps']:,.1f}" for _, row in df_rest.iterrows()],
+        text=[f"<b>{r['name']}</b><br>DPS: {r['dps']:,.0f}<br>H:{r['haste']:.0f} M:{r['mastery']:.0f} C:{r['crit']:.0f} V:{r['vers']:.0f}" for _, r in df_rest.iterrows()],
         hoverinfo="text",
         name="Other Sims"
     ))
 
-    # 2. Highlighted Top-Zone Points (Dynamische Beschriftung)
-    fig.add_trace(go.Scatterternary(
+    # 2. Top-performing cloud points (Larger, bright)
+    fig.add_trace(go.Scatter3d(
+        x=df_top["x"], y=df_top["y"], z=df_top["z"],
         mode="markers",
-        a=df_top["mastery"],
-        b=df_top["haste"],
-        c=df_top["crit"],
         marker=dict(
-            symbol="circle",
+            size=6,
             color=df_top["dps"],
             colorscale="Plasma",
             cmin=df["dps"].min(),
             cmax=max_dps,
-            size=11,
-            opacity=1.0,
-            line=dict(width=1.5, color="#FFD700"),
-            colorbar=dict(title="DPS", len=0.75, x=1.02),
+            opacity=0.9,
+            line=dict(width=1, color="#FFD700"),
+            colorbar=dict(title="DPS"),
             showscale=True
         ),
-        text=[f"<b>TOP {pct_str} Profile:</b> {row['name']}<br><b>DPS:</b> {row['dps']:,.1f}<br><b>Delta to MAX:</b> -{(1 - row['dps']/max_dps)*100:.2f}%" for _, row in df_top.iterrows()],
+        text=[f"<b>TOP {threshold_percent*100:.1f}%</b><br>{r['name']}<br>DPS: {r['dps']:,.0f}" for _, r in df_top.iterrows()],
         hoverinfo="text",
-        name=f"Top {pct_str} Zone"
+        name="Top Performers"
     ))
 
-    # 3. Dynamic Boundary Polygon (Hülle um die gewählte Schwelle)
-    if len(df_top) >= 3:
-        a_norm = df_top["mastery"].values / total_budget
-        c_norm = df_top["crit"].values / total_budget
-        
-        x_2d = 0.5 * (2 * c_norm + a_norm)
-        y_2d = (np.sqrt(3) / 2) * a_norm
-        pts = np.column_stack((x_2d, y_2d))
-        
-        try:
-            from scipy.spatial import ConvexHull
-            hull = ConvexHull(pts)
-            hull_indices = list(hull.vertices) + [hull.vertices[0]]
-            hull_df = df_top.iloc[hull_indices]
-
-            fig.add_trace(go.Scatterternary(
-                mode="lines",
-                a=hull_df["mastery"],
-                b=hull_df["haste"],
-                c=hull_df["crit"],
-                fill="toself",
-                fillcolor="rgba(225, 90, 40, 0.18)",
-                line=dict(color="#FF7F00", width=2, dash="dash"),
-                name=f"Top {pct_str} Area",
-                hoverinfo="skip"
-            ))
-        except ImportError:
-            pass
-
-    # 4. Highlight Peak Maximum
-    fig.add_trace(go.Scatterternary(
-        mode="markers+text",
-        a=[top_sim["mastery"]],
-        b=[top_sim["haste"]],
-        c=[top_sim["crit"]],
-        marker=dict(
-            symbol="diamond",
-            color="#FFF",
-            size=16,
-            line=dict(width=2.5, color="#000")
-        ),
-        text=[f"  <b>MAX: {top_sim['dps']:,.0f} DPS</b>"],
-        textposition="top center",
-        name="Absolute Top Sim",
-        hoverinfo="text"
-    ))
-
-    axis_config = lambda name: dict(
-        title=dict(text=f"<b>{name}</b>", font=dict(size=16, color="#FFFFFF")),
-        min=0,
-        linewidth=2,
-        linecolor="#888888",
-        gridwidth=1,
-        gridcolor="rgba(150, 150, 150, 0.25)",
-        ticks="outside",
-        tickfont=dict(size=12, color="#DDDDDD")
+# 3. Highlight Peak Maximum with clean hover info and stats
+    top_x, top_y, top_z = top_sim["x"], top_sim["y"], top_sim["z"]
+    
+    top_hover_text = (
+        f"<b>ABSOLUTE PEAK SIM</b><br>"
+        f"<b>DPS:</b> {top_sim['dps']:,.0f}<br>"
+        f"--------------------<br>"
+        f"<b>Haste:</b> {top_sim['haste']:.0f}<br>"
+        f"<b>Mastery:</b> {top_sim['mastery']:.0f}<br>"
+        f"<b>Crit:</b> {top_sim['crit']:.0f}<br>"
+        f"<b>Versatility:</b> {top_sim['vers']:.0f}"
     )
 
-    # Fully dynamic Layout Title
-    fig.update_layout(
-        title=dict(
-            text=f"Moonkin Stat Distribution (Top {pct_str} Zone Highlighted)<br><sup>Max DPS: {max_dps:,.0f} | Threshold (>= {100 - pct_val:.1f}% Max): {cutoff_dps:,.0f} DPS</sup>",
-            x=0.5,
-            y=0.97,
-            font=dict(size=20)
+    fig.add_trace(go.Scatter3d(
+        x=[top_x], y=[top_y], z=[top_z],
+        mode="markers",
+        marker=dict(
+            size=12,
+            color="gold",
+            symbol="diamond",
+            line=dict(width=2, color="#000000")
         ),
-        ternary=dict(
-            sum=total_budget,
-            aaxis=axis_config("MASTERY (Top)"),
-            baxis=axis_config("HASTE (Left)"),
-            caxis=axis_config("CRIT (Right)"),
+        text=[top_hover_text],
+        hoverinfo="text",
+        name="Absolute Peak"
+    ))
+
+    # 4. Add Tetrahedron Wireframe & Axis Vertex Labels
+    vertices = {
+        "HASTE": (0, 0, 1),
+        "MASTERY": (2 * np.sqrt(2) / 3, 0, -1/3),
+        "CRIT": (-np.sqrt(2) / 3, np.sqrt(6) / 3, -1/3),
+        "VERSATILITY": (-np.sqrt(2) / 3, -np.sqrt(6) / 3, -1/3)
+    }
+
+    # Edges connecting all 4 vertices
+    edges = [
+        ("HASTE", "MASTERY"), ("HASTE", "CRIT"), ("HASTE", "VERSATILITY"),
+        ("MASTERY", "CRIT"), ("MASTERY", "VERSATILITY"), ("CRIT", "VERSATILITY")
+    ]
+
+    for start_node, end_node in edges:
+        p1, p2 = vertices[start_node], vertices[end_node]
+        fig.add_trace(go.Scatter3d(
+            x=[p1[0], p2[0]], y=[p1[1], p2[1]], z=[p1[2], p2[2]],
+            mode="lines",
+            line=dict(color="rgba(200, 200, 200, 0.3)", width=2),
+            showlegend=False,
+            hoverinfo="skip"
+        ))
+
+    # Vertex markers and labels
+    vx, vy, vz, vlabels = [], [], [], []
+    for name, pos in vertices.items():
+        vx.append(pos[0])
+        vy.append(pos[1])
+        vz.append(pos[2])
+        vlabels.append(f"<b>{name} (100%)</b>")
+
+    fig.add_trace(go.Scatter3d(
+        x=vx, y=vy, z=vz,
+        mode="markers+text",
+        marker=dict(size=6, color="#FFFFFF"),
+        text=vlabels,
+        textposition="top center",
+        name="Stat Axes"
+    ))
+
+    fig.update_layout(
+        title=f"4-Stat Distribution Tetrahedron (Haste, Mastery, Crit, Vers)<br><sup>Max DPS: {max_dps:,.0f} | Budget: {total_budget:.0f}</sup>",
+        scene=dict(
+            xaxis=dict(visible=False),
+            yaxis=dict(visible=False),
+            zaxis=dict(visible=False),
             bgcolor="rgb(15, 15, 22)"
         ),
         template="plotly_dark",
-        margin=dict(l=60, r=60, b=60, t=100)
+        margin=dict(l=0, r=0, b=0, t=60)
     )
 
-    output_html = "moonkin_ternary_stats.html"
+    output_html = "moonkin_4stat_tetrahedron.html"
     fig.write_html(output_html)
-    print(f"Interactive ternary plot saved as: {output_html}")
-    
-    try:
-        webbrowser.open("file://" + os.path.realpath(output_html))
-    except Exception:
-        pass
+    print(f"Saved 3D tetrahedral plot as: {output_html}")
+    webbrowser.open("file://" + os.path.realpath(output_html))
 
 if __name__ == "__main__":
-    df_results = parse_simc_json("results.json")
-    
-    # Hier kannst du beliebig anpassen (z. B. 0.02 für 2% oder 0.05 für 5%)
-    create_ternary_stat_plot(df_results, threshold_percent=0.02)
+    df_results = parse_simc_4stat_json("results.json")
+    create_tetrahedral_plot(df_results, threshold_percent=0.02)
