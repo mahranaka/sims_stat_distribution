@@ -7,8 +7,7 @@ A Python-based workflow designed for **World of Warcraft (Balance Druid / Moonki
 ## 🌐 Live Interactive Demo
 
 View the live, interactive ternary plot directly in your browser:
-👉 [View Interactive Plotly Report](https://mahranaka.github.io/sims_stat_distribution/moonkin_ternary_stats.html)
-
+👉 <a href="https://mahranaka.github.io/sims_stat_distribution/moonkin_ternary_stats.html" target="_blank" rel="noopener noreferrer">View Interactive Plotly Report</a>
 
 ---
 
