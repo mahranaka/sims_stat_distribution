@@ -20,7 +20,7 @@ View the live, interactive tetrahedral plot directly in your browser:
 
 ## 🌟 Features
 
-* **Dynamic Grid Generation (`generate_grid.py`):** Automatically creates a `.simc` file with a 4-stat secondary budget matrix, calculating dynamic step sizes so stat combinations reach exact $0$ boundary values.
+* **Dynamic Grid Generation (`generate_profiles.py`):** Automatically creates a `.simc` file with a 4-stat secondary budget matrix, calculating dynamic step sizes so stat combinations reach exact $0$ boundary values.
 * **JSON Parsing (`plot_3d_stats.py`):** Extracts profile stat variations and mean DPS outputs from SimulationCraft JSON results (`sim.profilesets.results`).
 * **Interactive Tetrahedral Visualization:** Maps 4D stat compositions ($Haste + Mastery + Crit + Versatility = \text{Constant Budget}$) into a 3D Cartesian tetrahedron space using Plotly.
 * **Smooth Camera Auto-Rotation:** Features automatic camera orbiting in the output HTML that pauses during manual interaction and seamlessly resumes rotation from your new viewpoint after 8 seconds of inactivity.
@@ -39,9 +39,9 @@ Install the necessary Python dependencies using `pip`:
 ## 🚀 Quick Start
 
 ### 1. Generate the Simulation Input File
-Run the grid generator script to build `moonkin_grid_4stat.simc` containing your base character profile, Action Priority List (APL), and 4-stat matrix:
+Run the profile generator script to build `moonkin_grid_4stat.simc` containing your base character profile, Action Priority List (APL), and 4-stat matrix:
 
-    python generate_grid.py
+    python generate_profiles.py
 
 ### 2. Run SimulationCraft
 Execute the generated file in SimulationCraft (CLI or GUI) and output the results as a JSON file named `results.json`:
@@ -61,7 +61,7 @@ The resulting `moonkin_4stat_tetrahedron.html` will automatically open in your d
 
 ## ⚙️ Configuration & Customization
 
-* **Stat Budget & Steps:** Adjust the secondary stat budget and target division steps inside `generate_grid.py`:
+* **Stat Budget & Steps:** Adjust the secondary stat budget and target division steps inside `generate_profiles.py`:
   
       generate_4stat_grid_dynamic(output_filename="moonkin_grid_4stat.simc", budget=3049, steps_per_axis=20)
 
@@ -74,7 +74,7 @@ The resulting `moonkin_4stat_tetrahedron.html` will automatically open in your d
 
 ## 📊 Example Output
 
-The output is an interactive dark-themed 3D Plotly HTML file featuring:
+The output is an interactive dark-themed 3D Plotly HTML file (`moonkin_4stat_tetrahedron.html`) featuring:
 * A 3D tetrahedral wireframe marking $100\%$ allocations for **Haste**, **Mastery**, **Crit**, and **Versatility**.
 * A color-gradient point cloud across the interior volume based on the **Plasma** color palette.
 * A gold diamond marker indicating the absolute peak DPS configuration.
