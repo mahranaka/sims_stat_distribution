@@ -13,7 +13,7 @@ View the live, interactive tetrahedral plot directly in your browser:
 
 ## ⚠️ Disclaimer
 
-* **Base Profile:** The example profile embedded in the grid generator uses the top-simming race profile from Dreamgrove's official race sims ([dreamgrove.gg/static/sims/racesims2m.htm](https://www.dreamgrove.gg/static/sims/racesims2m.htm)).
+* **Base Profile:** The example profile embedded in the grid generator uses the following ([top sim by clankz.] (https://www.raidbots.com/simbot/report/iEvzkAYC8XCPr1JrAVNXw5)) with a total step budget of 3236 (flask removed and turned into stat budget).
 * **4-Stat Budget Matrix:** Evaluates secondary stat trade-offs across **Haste**, **Mastery**, **Crit**, and **Versatility** simultaneously within a constant stat budget.
 
 ---

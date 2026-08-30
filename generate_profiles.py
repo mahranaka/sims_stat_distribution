@@ -1,24 +1,140 @@
 import os
 
-# Complete Dreamgrove base profile
 FULL_PROFILE = """
-druid="tauren"
-source=default
-spec=balance
+# Base Actor
+# Raidbots-Generated Simc Input - "Combo 58" from "https://www.raidbots.com/simbot/report/dYZQnvmLmio5PosJndXF8p"
+# on 2026-08-30T13:52:29.483Z
+
+druid="Base 12.1"
 level=90
 race=tauren
-role=spell
-position=back
-professions=leatherworking=100/jewelcrafting=100
+server=anasterian
+spec=balance
 talents=CYGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWoMbNMmZgxsMzMzMLMgxMLzwYGLsMzyMjxMbYAwYbZmBjZbEYCAAAwCzMzMYzYGjZAAMzglBA
 omnium_talents=136822:1/136819:1/136817:1/136815:1/136814:1
 
-# Default consumables
+head=,id=271528,enchant_id=8017,gem_id=240967,bonus_id=13692/13698/13847/13848/13750,redirected_base_stats=271875
+neck=,id=268265,gem_id=240918/240892,bonus_id=13987/13668/13848/13662
+shoulder=,id=271526,enchant_id=8031,bonus_id=13694/13697/12854/13335/40,content_tuning=807
+back=,id=268253,bonus_id=13848/13662
+chest=,id=271531,enchant_id=7987,bonus_id=13690/13698/12854,redirected_base_stats=251159
+wrist=,id=244576,gem_id=240898,bonus_id=12214/13667/12497/13751/8960/12384/8791/13836/12666,content_tuning=3615,crafted_stats=32/40,crafting_quality=5
+hands=,id=271529,bonus_id=13691/13697/12854,redirected_base_stats=268234
+waist=,id=268256,gem_id=240898,bonus_id=13848/13662/13750
+legs=,id=271527,enchant_id=7935,bonus_id=13693/13698/13848,redirected_base_stats=268225
+feet=,id=251153,enchant_id=7963,bonus_id=12854/13662
+finger1=,id=268249,enchant_id=7967,gem_id=240898,bonus_id=13668/40/13335/12854,content_tuning=883
+finger2=,id=158366,enchant_id=7967,gem_id=240906,bonus_id=12854/13662/13750
+trinket1=,id=273796,bonus_id=4786/12854
+trinket2=,id=270164,bonus_id=40/13335/12854,content_tuning=883
+main_hand=,id=271092,enchant_id=8689,bonus_id=13848/13662
+off_hand=,id=245769,bonus_id=13836/13751/9627/13771/8960,crafted_stats=32/49,crafting_quality=5
+
+### Gear in Bags (Reconstructed by Top Gear, may not be perfect)
+# neck=,id=268265,gem_id=240890/240918,bonus_id=13708/13668/40/13335/13848,content_tuning=883
+# trinket1=,id=270167,bonus_id=4800/4786/12854
+# main_hand=,id=271092,enchant_id=7983,bonus_id=13848/13662
+# neck=,id=268265,gem_id=240918/240892,bonus_id=13708/13668/40/13335/13848,content_tuning=883
+# shoulder=,id=271526,enchant_id=8001,bonus_id=13694/13697/12854/13335/40,content_tuning=807
+# wrist=,id=271524,gem_id=240908,bonus_id=12854/13335/40/13696/13750,content_tuning=807
+# finger2=,id=251513,enchant_id=7967,gem_id=240898,bonus_id=8960/12214/13836/13751/9627,crafting_quality=5
+# main_hand=,id=271092,enchant_id=8041,bonus_id=13848/13662
+# head=,id=271528,enchant_id=8017,gem_id=240983,bonus_id=13692/13698/13847/13848/13750,redirected_base_stats=271875
+# wrist=,id=271524,gem_id=240898,bonus_id=12854/13335/40/13696/13750,content_tuning=807
+# shoulder=,id=244572,enchant_id=8001,bonus_id=12214/13836/13751/9627/8960/12384,crafted_stats=32/49,crafting_quality=5
+# wrist=,id=244576,gem_id=240908,bonus_id=12214/13667/12497/13751/8960/12384/8791/13836/12666,content_tuning=3615,crafted_stats=32/40,crafting_quality=5
+# finger2=,id=252258,enchant_id=7967,gem_id=240898,bonus_id=13668/12854/13662
+# off_hand=,id=251191,bonus_id=12854/13662
+# neck=,id=268265,gem_id=240898/240898,bonus_id=13708/13668/40/13335/13848,content_tuning=883
+# finger2=,id=251513,enchant_id=7967,gem_id=240898,bonus_id=8960/13836/13751/9627,crafting_quality=5
+# trinket1=,id=250215,bonus_id=12854/13440/40,content_tuning=883
+# main_hand=,id=271092,enchant_id=7981,bonus_id=13848/13662
+# head=,id=271528,enchant_id=8017,gem_id=240898,bonus_id=13692/13698/13847/13848/13750,redirected_base_stats=271875
+# neck=,id=268265,gem_id=240967/240908,bonus_id=13708/13668/40/13335/13848,content_tuning=883
+# wrist=,id=244576,gem_id=240918,bonus_id=12214/13667/12497/13751/8960/12384/8791/13836/12666,content_tuning=3615,crafted_stats=32/40,crafting_quality=5
+# shoulder=,id=244572,enchant_id=8001,bonus_id=13836/13751/9627/8960/12384,crafted_stats=32/49,crafting_quality=5
+# shoulder=,id=271526,enchant_id=8001,bonus_id=13694/13697/12854,redirected_base_stats=251223
+# off_hand=,id=245769,bonus_id=12214/13836/13751/9627/12693/8960,crafted_stats=32/49,crafting_quality=5
+# shoulder=,id=271526,enchant_id=8001,bonus_id=13694/13697/12854,redirected_base_stats=268246
+# chest=,id=193764,enchant_id=7987,bonus_id=12854/13662
+# hands=,id=271529,bonus_id=13691/13697/12854,redirected_base_stats=159337
+# feet=,id=271530,enchant_id=7963,bonus_id=12854/13335/40,content_tuning=807
+# finger2=,id=158366,enchant_id=7967,gem_id=240898,bonus_id=12854/13662/13750
+# head=,id=271528,enchant_id=8017,bonus_id=13692/13698/13847/12854,redirected_base_stats=271875
+# waist=,id=268256,bonus_id=13848/13662
+# head=,id=271875,bonus_id=40/13696/13662/13335/13848/13847,content_tuning=883
+# neck=,id=268265,gem_id=240967/240908,bonus_id=40/13668/13335/13848/13708,content_tuning=883
+# shoulder=,id=271526,enchant_id=8031,bonus_id=12854/13335/13694/40/13697,content_tuning=807
+# back=,id=271523,bonus_id=12854/13335/40,content_tuning=807
+# chest=,id=271531,enchant_id=7987,bonus_id=12854/13335/13690/40/13698,content_tuning=807
+# shirt=,id=268274,content_tuning=3606
+# tabard=,id=210469,content_tuning=2699
+# hands=,id=271529,bonus_id=12854/13335/13691/40/13697,content_tuning=807
+# waist=,id=271525,bonus_id=12854/13335/40/13696,content_tuning=807
+# legs=,id=271527,enchant_id=7935,bonus_id=12854/13335/13693/40/13698,content_tuning=807
+# finger1=,id=268249,enchant_id=7967,gem_id=240898,bonus_id=40/13668/13335/12854,content_tuning=883
+# finger2=,id=240949,enchant_id=7967,gem_id=240892,bonus_id=12214/13667/12497/13751/8791/13835,content_tuning=3615,crafted_stats=36/40,crafting_quality=5
+# main_hand=,id=245770,enchant_id=7981,bonus_id=12214/13667/12497/13751/12693/8960/8791/13836,content_tuning=3615,crafted_stats=36/40,crafting_quality=5
+# head=,id=271528,enchant_id=8017,bonus_id=12854/13335/13692/40/13696/13698,content_tuning=807
+# neck=,id=240950,gem_id=240983,bonus_id=12214/13667/12497/13751/8791/13836,content_tuning=3615,crafted_stats=36/40,crafting_quality=5
+# neck=,id=250247,gem_id=240898/240898,bonus_id=6652/13668/13335/12806
+# wrist=,id=271524,bonus_id=12854/13335/40/13696,content_tuning=807
+# waist=,id=249314,bonus_id=6652/12667/13577/13335/12802
+# feet=,id=250026,enchant_id=7963,bonus_id=12806/6652/13335/3174
+# finger1=,id=240949,bonus_id=12214/13667/12497/13751/8791/13835,content_tuning=3615,crafted_stats=40/49,crafting_quality=5
+# finger1=,id=270575,enchant_id=7967,gem_id=240908,bonus_id=12840/13658/13452,content_tuning=483
+# finger1=,id=251217,enchant_id=7967,gem_id=240898,bonus_id=13440/6652/13668/12699/12806
+# finger1=,id=193708,enchant_id=7967,gem_id=240898,bonus_id=13440/6652/13668/12699/12806
+# finger1=,id=270577,enchant_id=7967,gem_id=240908,bonus_id=12840/13658/13452,content_tuning=483
+# trinket1=,id=193757,bonus_id=12854/13440/40,content_tuning=883
+# trinket1=,id=158368,bonus_id=12854/13440/40,content_tuning=883
+# trinket1=,id=270168,bonus_id=40/13335/13848,content_tuning=883
+# trinket1=,id=274495,bonus_id=12841/6652,content_tuning=883
+# trinket1=,id=250214,bonus_id=12854/13440/40,content_tuning=883
+# trinket1=,id=270169,bonus_id=40/13335/13848,content_tuning=883
+# trinket1=,id=250243,bonus_id=12854/13440/40,content_tuning=883
+# trinket1=,id=250225,bonus_id=12854/13440/40,content_tuning=883
+# trinket1=,id=250255,bonus_id=12854/13440/40,content_tuning=883
+# trinket1=,id=274497,bonus_id=12841/6652,content_tuning=883
+# trinket1=,id=250244,bonus_id=12854/13440/40,content_tuning=883
+# trinket1=,id=250245,bonus_id=12854/13440/40,content_tuning=883
+# trinket1=,id=250248,bonus_id=12854/13440/40,content_tuning=883
+# trinket1=,id=250224,bonus_id=12854/13440/40,content_tuning=883
+# trinket1=,id=270170,bonus_id=40/13335/12854,content_tuning=883
+# trinket1=,id=270169,bonus_id=40/13335/13848,content_tuning=883
+# trinket1=,id=250228,bonus_id=12854/13440/40,content_tuning=883
+# trinket1=,id=274495,bonus_id=12841/6652,content_tuning=883
+# trinket1=,id=273649,bonus_id=12854/13440/40,content_tuning=883
+# trinket1=,id=270606,bonus_id=12840/13658/13452,content_tuning=883
+# trinket1=,id=270161,bonus_id=40/13335/12854,content_tuning=883
+# trinket1=,id=270169,bonus_id=40/13335/13848,content_tuning=883
+# trinket1=,id=273794,bonus_id=12854/13440/40,content_tuning=883
+# trinket1=,id=270175,bonus_id=40/13335/13848,content_tuning=883
+# trinket1=,id=274499,bonus_id=12841/6652,content_tuning=883
+# trinket1=,id=274493,bonus_id=12841/6652,content_tuning=883
+# trinket1=,id=270604,bonus_id=12840/13658/13452,content_tuning=883
+# trinket1=,id=270602,bonus_id=12840/13658/13452,content_tuning=883
+# trinket1=,id=250259,bonus_id=12854/13440/40,content_tuning=883
+# trinket1=,id=274498,bonus_id=12841/6652,content_tuning=883
+# trinket1=,id=251789,bonus_id=12841/6652,content_tuning=883
+# main_hand=,id=128858,bonus_id=722,content_tuning=642
+# main_hand=,id=135582,content_tuning=642
+# main_hand=,id=270827,bonus_id=12840/13658/13452,content_tuning=483
+# main_hand=,id=249283,enchant_id=7981,bonus_id=40/13335/13654
+# main_hand=,id=251201,enchant_id=8039,bonus_id=13440/6652/12701/13654
+# main_hand=,id=249302,enchant_id=8039,bonus_id=6652/13335/13654
+name="Base 12.1"
+
+# Consumables
 potion=potion_of_recklessness_2
-flask=flask_of_the_shattered_sun_2
-food=silvermoon_parade
-augmentation=void_touched
-temporary_enchant=main_hand:thalassian_phoenix_oil_2
+
+# Expansion Options
+temporary_enchant=
+midnight.crucible_of_erratic_energies_violence=1
+midnight.crucible_of_erratic_energies_sustenance=1
+midnight.crucible_of_erratic_energies_predation=1
+dragonflight.ruby_whelp_shell_training=
+# Custom APL
 
 # Executed before combat begins. Accepts non-harmful actions only.
 actions.precombat=snapshot_stats
@@ -30,139 +146,205 @@ actions.precombat+=/variable,name=on_use_trinket,op=add,value=trinket.1.has_use_
 actions.precombat+=/variable,name=on_use_trinket,op=add,value=(trinket.2.has_use_buff)*2
 actions.precombat+=/variable,name=prio,value=0
 actions.precombat+=/moonkin_form
+# Pre-Cast
 actions.precombat+=/wrath
 actions.precombat+=/wrath
-actions.precombat+=/wrath,if=hero_tree.keeper_of_the_grove&enemies=1
-actions.precombat+=/starfire,if=hero_tree.elunes_chosen|enemies>1
+actions.precombat+=/wrath,if=hero_tree.keeper_of_the_grove&spell_targets.starfire<=2
+actions.precombat+=/starfire,if=hero_tree.elunes_chosen|spell_targets.starfire>2
 
-# Executed every time the actor is available.
+
 actions=variable,name=passive_asp,value=(2+2*set_bonus.mid1_2pc*buff.eclipse.down)*(dot.moonfire.ticking+dot.sunfire.ticking+buff.solstice.up*((active_dot.moonfire_dmg>4)+(active_dot.moonfire_dmg>16)+(active_dot.sunfire_dmg>4)+(active_dot.sunfire_dmg>16)))%spell_haste+talent.natures_balance+buff.fury_of_elune.up*((floor(buff.fury_of_elune.remains%0.5)>?4)*2.5+talent.the_eternal_moon*(buff.fury_of_elune.remains<2)*6)+buff.sundered_firmament.up*((floor(buff.sundered_firmament.remains%0.5)>?4)*0.6+talent.the_eternal_moon*(buff.sundered_firmament.remains<2)*6)
+
 actions+=/variable,name=starsurge_cost,value=action.starsurge.base_cost-buff.astral_communion.up*15-talent.elunes_guidance*buff.incarnation_chosen_of_elune.up*10
 actions+=/variable,name=starfall_cost,value=action.starfall.base_cost-buff.astral_communion.up*15-talent.elunes_guidance*buff.incarnation_chosen_of_elune.up*12
+
 actions+=/variable,name=ca_pooling_threshold,value=(action.starsurge.base_cost-talent.incarnation_chosen_of_elune*talent.elunes_guidance*10)*(3-buff.touch_the_cosmos.react-buff.starweavers_weft.react-buff.starweavers_warp.react)-talent.astral_communion*15>?astral_power.max-20
 actions+=/variable,name=ecl_pooling_threshold,value=action.starsurge.base_cost*(3-buff.touch_the_cosmos.react-buff.starweavers_weft.react-buff.starweavers_warp.react)-talent.astral_communion*15>?astral_power.max
+
 actions+=/variable,name=ca_control_remains,value=cooldown.ca_inc.full_recharge_time+cooldown.ca_inc.duration-(cooldown.ca_inc.base_duration-talent.control_of_the_dream*15)
 actions+=/variable,name=convoke_control_remains,value=cooldown.convoke_the_spirits.remains+cooldown.convoke_the_spirits.duration-(cooldown.convoke_the_spirits.base_duration-talent.control_of_the_dream*15)
 actions+=/variable,name=fon_control_remains,value=cooldown.force_of_nature.remains+cooldown.force_of_nature.duration-(cooldown.force_of_nature.base_duration-talent.control_of_the_dream*15)
+
 actions+=/variable,name=next_on_use_trinket_remains,value=(variable.on_use_trinket=1)*trinket.1.cooldown.remains+(variable.on_use_trinket=2)*trinket.2.cooldown.remains+(variable.on_use_trinket=3)*(trinket.1.cooldown.remains>?trinket.2.cooldown.remains)
+
 actions+=/variable,name=anchor_cd_duration,value=variable.anchor_cd*(hero_tree.keeper_of_the_grove*cooldown.force_of_nature.duration<?hero_tree.elunes_chosen*cooldown.fury_of_elune.duration)
 actions+=/variable,name=anchor_cd_remains,value=variable.anchor_cd*(hero_tree.keeper_of_the_grove*cooldown.force_of_nature.remains<?hero_tree.elunes_chosen*cooldown.fury_of_elune.remains)
 actions+=/variable,name=anchor_cd_hold_remains,value=variable.anchor_cd*(variable.anchor_cd_remains<?hero_tree.keeper_of_the_grove*variable.fon_control_remains)
+
 actions+=/variable,name=cds_synced,value=hero_tree.keeper_of_the_grove&talent.fury_of_elune&(cooldown.fury_of_elune.remains>cooldown.force_of_nature.remains-5&cooldown.fury_of_elune.remains<variable.fon_control_remains+5)
+
 actions+=/variable,name=ca_burst_effective_cd,value=variable.cds_synced*cooldown.fury_of_elune.remains<?variable.anchor_cd_remains-variable.cds_synced*gcd.max<?cooldown.ca_inc.remains-(variable.anchor_cd+variable.cds_synced)*gcd.max<?(cooldown.convoke_the_spirits.remains+action.convoke_the_spirits.execute_time+gcd.max-10-variable.cds_synced*gcd.max)*(!variable.anchor_cd|cooldown.convoke_the_spirits.remains<variable.anchor_cd_hold_remains+10)*(cooldown.convoke_the_spirits.remains<variable.ca_control_remains)
 actions+=/variable,name=ca_burst_hold_remains,value=(variable.cds_synced*(cooldown.fury_of_elune.remains+5>?variable.fon_control_remains-gcd.max)+!variable.cds_synced*(variable.anchor_cd_hold_remains+!variable.anchor_cd*fight_remains)>?variable.ca_control_remains-(variable.anchor_cd+variable.cds_synced)*gcd.max>?talent.convoke_the_spirits*(variable.convoke_control_remains-(1+variable.anchor_cd+variable.cds_synced)*gcd.max)+!talent.convoke_the_spirits*fight_remains)<?variable.ca_burst_effective_cd
+
 actions+=/variable,name=ecl_burst_effective_cd,value=variable.cds_synced*cooldown.fury_of_elune.remains<?variable.anchor_cd_remains-variable.cds_synced*gcd.max<?(cooldown.eclipse.remains<?buff.eclipse.remains)-(variable.anchor_cd+variable.cds_synced)*gcd.max<?(cooldown.convoke_the_spirits.remains+action.convoke_the_spirits.execute_time+gcd.max-10-variable.cds_synced*gcd.max)*(!variable.anchor_cd|cooldown.convoke_the_spirits.remains<variable.anchor_cd_hold_remains+10)
 actions+=/variable,name=ecl_burst_hold_remains,value=(variable.cds_synced*(cooldown.fury_of_elune.remains+5>?variable.fon_control_remains-gcd.max)+!variable.cds_synced*(variable.anchor_cd_hold_remains+!variable.anchor_cd*fight_remains)>?talent.convoke_the_spirits*(variable.convoke_control_remains-(1+variable.anchor_cd+variable.cds_synced)*gcd.max)+!talent.convoke_the_spirits*fight_remains)<?0
+
 actions+=/variable,name=ca_burst_effective_cd,op=max,value=variable.next_on_use_trinket_remains-(variable.anchor_cd+variable.cds_synced)*gcd.max,if=variable.on_use_trinket&(variable.ca_burst_hold_remains+5>=variable.next_on_use_trinket_remains-(variable.anchor_cd+variable.cds_synced)*gcd.max|cooldown.ca_inc.full_recharge_time>(variable.next_on_use_trinket_remains<?(variable.ecl_burst_effective_cd<?variable.ecl_burst_hold_remains)+variable.anchor_cd_duration+talent.control_of_the_dream*((15-variable.fon_control_remains<?0)+(variable.fon_control_remains-(variable.ecl_burst_effective_cd<?variable.ecl_burst_hold_remains)-variable.cds_synced*gcd.max<?0))+(variable.anchor_cd+variable.cds_synced)*gcd.max))&fight_remains>variable.next_on_use_trinket_remains+buff.ca_inc.duration+gcd.max&(!talent.convoke_the_spirits|variable.ca_burst_effective_cd>=(cooldown.convoke_the_spirits.remains+action.convoke_the_spirits.execute_time+gcd.max-10-variable.cds_synced*gcd.max)|variable.convoke_control_remains>variable.next_on_use_trinket_remains+(variable.on_use_trinket=1)*trinket.1.cooldown.duration+(variable.on_use_trinket=2)*trinket.2.cooldown.duration+(variable.on_use_trinket=3)*((trinket.1.cooldown.remains>=trinket.2.cooldown.remains)*trinket.1.cooldown.remains+(trinket.1.cooldown.remains<trinket.2.cooldown.remains)*trinket.2.cooldown.remains<?20))&(variable.anchor_cd|talent.convoke_the_spirits|variable.on_use_trinket=3|!cooldown.ca_inc.ready|cooldown.ca_inc.base_duration>(variable.on_use_trinket=1)*trinket.1.cooldown.duration+(variable.on_use_trinket=2)*trinket.2.cooldown.duration)
+
 actions+=/variable,name=ca_burst_effective_cd,op=max,value=cooldown.potion.remains-(variable.anchor_cd+variable.cds_synced)*gcd.max,if=((variable.anchor_cd|talent.convoke_the_spirits)&variable.ca_burst_hold_remains>=cooldown.potion.remains-(variable.anchor_cd+variable.cds_synced)*gcd.max|fight_remains<(cooldown.ca_inc.full_recharge_time<?(talent.convoke_the_spirits&!talent.elunes_guidance)*(variable.convoke_control_remains+cooldown.convoke_the_spirits.base_duration-talent.control_of_the_dream*15))+!(talent.convoke_the_spirits&!talent.elunes_guidance)*buff.ca_inc.duration+(talent.convoke_the_spirits&!talent.elunes_guidance)*action.convoke_the_spirits.execute_time+gcd.max)&fight_remains>cooldown.potion.remains+buff.ca_inc.duration+5&cooldown.ca_inc.remains<cooldown.potion.remains
+
 actions+=/variable,name=ecl_burst_effective_cd,op=max,value=variable.next_on_use_trinket_remains-(variable.anchor_cd+variable.cds_synced)*gcd.max,if=variable.on_use_trinket&(variable.ecl_burst_hold_remains<cooldown.ca_inc.remains|variable.ecl_burst_hold_remains>=cooldown.ca_inc.remains&(variable.ca_burst_effective_cd~=variable.next_on_use_trinket_remains-(variable.anchor_cd+variable.cds_synced)*gcd.max|variable.ca_burst_hold_remains>=variable.ca_burst_effective_cd))&variable.ecl_burst_hold_remains+5>=variable.next_on_use_trinket_remains-(variable.anchor_cd+variable.cds_synced)*gcd.max&fight_remains>variable.next_on_use_trinket_remains+buff.eclipse.duration+gcd.max
+
 actions+=/variable,name=ca_burst_hold_remains,op=max,value=variable.ca_burst_effective_cd
+
 actions+=/variable,name=ecl_burst_hold_remains,op=max,value=variable.ecl_burst_effective_cd
-actions+=/variable,name=pre_burst_condition,op=reset,if=prev.incarnation_chosen_of_elune|prev.celestial_alignment|!variable.ca_burst_next&(prev.solar_eclipse|prev.lunar_eclipse)
-actions+=/variable,name=ca_burst_next,default=1,value=variable.ca_burst_effective_cd~<=variable.ecl_burst_hold_remains&((((variable.ca_burst_effective_cd+(variable.anchor_cd+variable.cds_synced)*gcd.max<?(buff.eclipse.remains<?cooldown.eclipse.remains)+buff.eclipse.duration+gcd.max)+buff.ca_inc.duration)~<=(variable.ca_burst_hold_remains+buff.ca_inc.duration+(variable.anchor_cd+variable.cds_synced)*gcd.max>?(buff.eclipse.remains<?cooldown.eclipse.full_recharge_time)+cooldown.eclipse.duration+gcd.max))|((variable.ca_burst_effective_cd+(variable.anchor_cd+variable.cds_synced)*gcd.max<?((buff.eclipse.remains<?cooldown.eclipse.remains)+buff.eclipse.duration+gcd.max<?cooldown.eclipse.full_recharge_time)+buff.eclipse.duration)+buff.ca_inc.duration~<=(variable.ca_burst_hold_remains+buff.ca_inc.duration+(variable.anchor_cd+variable.cds_synced)*gcd.max>?(buff.eclipse.remains<?cooldown.eclipse.full_recharge_time)+(cooldown.eclipse.duration+gcd.max)*2)))|!(variable.anchor_cd|talent.convoke_the_spirits)|variable.ca_control_remains<variable.ecl_burst_hold_remains+variable.anchor_cd_duration+talent.control_of_the_dream*((15-variable.fon_control_remains<?0)+(variable.fon_control_remains-variable.ecl_burst_hold_remains-variable.cds_synced*gcd.max<?0))+(1+variable.anchor_cd+variable.cds_synced)*gcd.max|fight_remains<variable.anchor_cd_remains+variable.anchor_cd_duration+10&fight_remains>variable.ca_burst_effective_cd+10|fight_remains<(cooldown.ca_inc.full_recharge_time<?(talent.convoke_the_spirits&!talent.elunes_guidance)*(variable.convoke_control_remains+cooldown.convoke_the_spirits.base_duration-talent.control_of_the_dream*15))+!(talent.convoke_the_spirits&!talent.elunes_guidance)*buff.ca_inc.duration+(talent.convoke_the_spirits&!talent.elunes_guidance)*action.convoke_the_spirits.execute_time+gcd.max&fight_remains>cooldown.potion.remains+buff.ca_inc.duration+5&cooldown.ca_inc.remains<cooldown.potion.remains&!(variable.ecl_burst_hold_remains>cooldown.eclipse.full_recharge_time+(1-variable.anchor_cd-variable.cds_synced)*gcd.max|variable.ecl_burst_effective_cd<cooldown.eclipse.full_recharge_time-buff.eclipse.duration-(1+variable.anchor_cd-variable.cds_synced)*gcd.max),if=!variable.ecl_counter&(prev.incarnation_chosen_of_elune|prev.celestial_alignment|!variable.opener&(prev.solar_eclipse|prev.lunar_eclipse))|prev.convoke_the_spirits
+
+actions+=/variable,name=pre_burst_condition,op=reset,if=prev.incarnation_chosen_of_elune|prev.celestial_alignment|!variable.ca_burst_next&prev.eclipse
+
+actions+=/variable,name=ca_burst_next,default=1,value=variable.ca_burst_effective_cd~<=variable.ecl_burst_hold_remains&((((variable.ca_burst_effective_cd+(variable.anchor_cd+variable.cds_synced)*gcd.max<?(buff.eclipse.remains<?cooldown.eclipse.remains)+buff.eclipse.duration+gcd.max)+buff.ca_inc.duration)~<=(variable.ca_burst_hold_remains+buff.ca_inc.duration+(variable.anchor_cd+variable.cds_synced)*gcd.max>?(buff.eclipse.remains<?cooldown.eclipse.full_recharge_time)+cooldown.eclipse.duration+gcd.max))|((variable.ca_burst_effective_cd+(variable.anchor_cd+variable.cds_synced)*gcd.max<?((buff.eclipse.remains<?cooldown.eclipse.remains)+buff.eclipse.duration+gcd.max<?cooldown.eclipse.full_recharge_time)+buff.eclipse.duration)+buff.ca_inc.duration~<=(variable.ca_burst_hold_remains+buff.ca_inc.duration+(variable.anchor_cd+variable.cds_synced)*gcd.max>?(buff.eclipse.remains<?cooldown.eclipse.full_recharge_time)+(cooldown.eclipse.duration+gcd.max)*2)))|!(variable.anchor_cd|talent.convoke_the_spirits)|variable.ca_control_remains<variable.ecl_burst_hold_remains+variable.anchor_cd_duration+talent.control_of_the_dream*((15-variable.fon_control_remains<?0)+(variable.fon_control_remains-variable.ecl_burst_hold_remains-variable.cds_synced*gcd.max<?0))+(1+variable.anchor_cd+variable.cds_synced)*gcd.max|fight_remains<variable.anchor_cd_remains+variable.anchor_cd_duration+10&fight_remains>variable.ca_burst_effective_cd+10|fight_remains<(cooldown.ca_inc.full_recharge_time<?(talent.convoke_the_spirits&!talent.elunes_guidance)*(variable.convoke_control_remains+cooldown.convoke_the_spirits.base_duration-talent.control_of_the_dream*15))+!(talent.convoke_the_spirits&!talent.elunes_guidance)*buff.ca_inc.duration+(talent.convoke_the_spirits&!talent.elunes_guidance)*action.convoke_the_spirits.execute_time+gcd.max&fight_remains>cooldown.potion.remains+buff.ca_inc.duration+5&cooldown.ca_inc.remains<cooldown.potion.remains&!(variable.ecl_burst_hold_remains>cooldown.eclipse.full_recharge_time+(1-variable.anchor_cd-variable.cds_synced)*gcd.max|variable.ecl_burst_effective_cd<cooldown.eclipse.full_recharge_time-buff.eclipse.duration-(1+variable.anchor_cd+variable.cds_synced)*gcd.max),if=!variable.ecl_counter&(prev.incarnation_chosen_of_elune|prev.celestial_alignment|!variable.opener&prev.eclipse)|prev.convoke_the_spirits
+
 actions+=/variable,name=burst_hold_remains,value=variable.ca_burst_next*variable.ca_burst_hold_remains<?!variable.ca_burst_next*variable.ecl_burst_hold_remains
 actions+=/variable,name=burst_effective_cd,value=variable.ca_burst_next*variable.ca_burst_effective_cd<?!variable.ca_burst_next*variable.ecl_burst_effective_cd
-actions+=/variable,name=burst_hold_remains,op=min,value=variable.burst_effective_cd<?variable.next_on_use_trinket_remains,if=variable.on_use_trinket&!(variable.anchor_cd|talent.convoke_the_spirits)
+actions+=/variable,name=burst_hold_remains,op=min,value=variable.burst_effective_cd<?variable.next_on_use_trinket_remains,if=variable.on_use_trinket&!(variable.anchor_cd|talent.convoke_the_spirits)&(!trinket.1.is.hex_lords_dooming_idol|variable.next_on_use_trinket_remains=trinket.2.cooldown.remains)&(!trinket.2.is.hex_lords_dooming_idol|variable.next_on_use_trinket_remains=trinket.1.cooldown.remains)
 actions+=/variable,name=burst_hold_remains,op=min,value=variable.burst_effective_cd<?fight_remains-((variable.ca_burst_next*buff.ca_inc.duration+!variable.ca_burst_next*buff.eclipse.duration<?(fight_remains-cooldown.potion.remains>?30))+(1+variable.anchor_cd+variable.cds_synced)*gcd.max)
-actions+=/variable,name=ecl_counter,op=add,value=1,if=prev.incarnation_chosen_of_elune|prev.celestial_alignment|!variable.opener&(prev.solar_eclipse|prev.lunar_eclipse)
-actions+=/variable,name=ecl_before_burst,value=variable.burst_hold_remains>((!cooldown.eclipse.ready*(cooldown.eclipse.remains+gcd.max)<?buff.eclipse.remains+gcd.max)+buff.eclipse.duration<?!variable.ca_burst_next*(cooldown.eclipse.full_recharge_time+gcd.max+(variable.ecl_counter>1)*5))-(variable.anchor_cd+variable.cds_synced)*gcd.max,if=prev.incarnation_chosen_of_elune|prev.celestial_alignment|prev.solar_eclipse|prev.lunar_eclipse|prev.convoke_the_spirits
-actions+=/variable,name=double_ecl_before_burst,value=variable.burst_hold_remains>((!cooldown.eclipse.ready*(cooldown.eclipse.remains+gcd.max)<?buff.eclipse.remains+gcd.max)+buff.eclipse.duration<?cooldown.eclipse.full_recharge_time)+buff.eclipse.duration+(1-variable.anchor_cd-variable.cds_synced)*gcd.max&(variable.ca_burst_next|variable.ecl_burst_hold_remains>cooldown.eclipse.full_recharge_time+cooldown.eclipse.duration+(1-variable.anchor_cd-variable.cds_synced)*gcd.max+5),if=prev.incarnation_chosen_of_elune|prev.celestial_alignment|prev.solar_eclipse|prev.lunar_eclipse|prev.convoke_the_spirits
+
+actions+=/variable,name=ecl_counter,op=add,value=1,if=prev.incarnation_chosen_of_elune|prev.celestial_alignment|!variable.opener&prev.eclipse
+actions+=/variable,name=ecl_before_burst,value=variable.burst_hold_remains>((!cooldown.eclipse.ready*(cooldown.eclipse.remains+gcd.max)<?buff.eclipse.remains+gcd.max)+buff.eclipse.duration<?!variable.ca_burst_next*(cooldown.eclipse.full_recharge_time+gcd.max+(variable.ecl_counter>1)*5))-(variable.anchor_cd+variable.cds_synced)*gcd.max,if=prev.incarnation_chosen_of_elune|prev.celestial_alignment|prev.eclipse|prev.convoke_the_spirits
+actions+=/variable,name=double_ecl_before_burst,value=variable.burst_hold_remains>((!cooldown.eclipse.ready*(cooldown.eclipse.remains+gcd.max)<?buff.eclipse.remains+gcd.max)+buff.eclipse.duration<?cooldown.eclipse.full_recharge_time)+buff.eclipse.duration+(1-variable.anchor_cd-variable.cds_synced)*gcd.max&(variable.ca_burst_next|variable.ecl_burst_hold_remains>cooldown.eclipse.full_recharge_time+cooldown.eclipse.duration+(1-variable.anchor_cd-variable.cds_synced)*gcd.max+5),if=prev.incarnation_chosen_of_elune|prev.celestial_alignment|prev.solar_eclipse|prev.eclipse|prev.convoke_the_spirits
+
 actions+=/variable,name=burst_refresh_moonfire,value=(hero_tree.elunes_chosen|!talent.treants_of_the_moon|!variable.anchor_cd)&dot.moonfire.remains<10+(variable.anchor_cd+variable.cds_synced)*gcd.max
 actions+=/variable,name=burst_refresh_sunfire,value=dot.sunfire.remains<10+(variable.anchor_cd+variable.cds_synced+hero_tree.keeper_of_the_grove*talent.wild_mushroom*cooldown.wild_mushroom.charges)*gcd.max
 actions+=/variable,name=burst_pooling_threshold,value=((!(talent.convoke_the_spirits&variable.cds_synced&variable.burst_effective_cd>=cooldown.convoke_the_spirits.remains+action.convoke_the_spirits.execute_time+gcd.max-10-variable.cds_synced*gcd.max)*astral_power.max<?(action.starsurge.base_cost-(variable.ca_burst_next&talent.incarnation_chosen_of_elune&talent.elunes_guidance)*10)*3-talent.astral_communion*15)>?astral_power.max)-(action.starsurge.base_cost-(variable.ca_burst_next&talent.incarnation_chosen_of_elune&talent.elunes_guidance)*10)*(buff.touch_the_cosmos.react+buff.starweavers_weft.react+buff.starweavers_warp.react)-variable.passive_asp-variable.anchor_cd*(hero_tree.keeper_of_the_grove*action.force_of_nature.energize_amount<?hero_tree.elunes_chosen*15)-variable.cds_synced*15-variable.burst_refresh_moonfire*action.moonfire.energize_amount-variable.burst_refresh_sunfire*action.sunfire.energize_amount-hero_tree.keeper_of_the_grove*talent.wild_mushroom*cooldown.wild_mushroom.charges*action.wild_mushroom.energize_amount
+
 actions+=/variable,name=pre_burst_condition,value=variable.burst_effective_cd<=(variable.burst_refresh_moonfire+variable.burst_refresh_sunfire+hero_tree.keeper_of_the_grove*talent.wild_mushroom*cooldown.wild_mushroom.charges)*gcd.max&buff.eclipse.remains<=(variable.anchor_cd+variable.cds_synced+variable.burst_refresh_moonfire+variable.burst_refresh_sunfire+hero_tree.keeper_of_the_grove*talent.wild_mushroom*cooldown.wild_mushroom.charges)*gcd.max&(cooldown.eclipse.full_recharge_time>=buff.ca_inc.duration+(variable.anchor_cd+variable.cds_synced+variable.burst_refresh_moonfire+variable.burst_refresh_sunfire+hero_tree.keeper_of_the_grove*talent.wild_mushroom*cooldown.wild_mushroom.charges)*gcd.max&variable.ecl_counter>2|!variable.ca_burst_next|!variable.ecl_before_burst)&(astral_power>=variable.burst_pooling_threshold|(variable.burst_hold_remains>?cooldown.eclipse.full_recharge_time-(variable.anchor_cd+variable.cds_synced)*gcd.max)<(1+variable.burst_refresh_moonfire+variable.burst_refresh_sunfire+hero_tree.keeper_of_the_grove*talent.wild_mushroom*cooldown.wild_mushroom.charges)*gcd.max),if=!variable.pre_burst_condition
+actions+=/variable,name=pre_burst_mem,value=variable.pre_burst_condition&!variable.pre_burst_mem_reset
+actions+=/variable,name=pre_burst_mem_reset,value=!variable.pre_burst_condition
 actions+=/variable,name=ecl_counter,op=reset,if=!variable.opener&variable.pre_burst_condition
-actions+=/use_items,if=!variable.opener&(variable.anchor_cd&(hero_tree.keeper_of_the_grove&prev_gcd.1.force_of_nature|hero_tree.elunes_chosen&prev_gcd.1.fury_of_elune)|!variable.anchor_cd&variable.pre_burst_condition&!variable.burst_refresh_moonfire&!variable.burst_refresh_sunfire)&(variable.ca_burst_next&cooldown.ca_inc.ready|!cooldown.ca_inc.ready|variable.on_use_trinket=3&(!trinket.1.cooldown.ready&(trinket.1.cooldown.remains<?20)<=(cooldown.potion.remains<?variable.anchor_cd_hold_remains+gcd.max)+5|trinket.1.cooldown.ready&(trinket.2.cooldown.remains<?20)<=(cooldown.potion.remains<?variable.anchor_cd_hold_remains+gcd.max)+5)|fight_remains>(trinket.1.cooldown.ready*trinket.1.cooldown.duration<?trinket.2.cooldown.ready*trinket.2.cooldown.duration)+15)|buff.ca_inc.up&fight_remains<cooldown.ca_inc.remains|buff.eclipse.up&fight_remains<(cooldown.ca_inc.remains>?variable.anchor_cd_remains)+10|fight_remains<15+gcd.max
+
+actions+=/use_item,slot=trinket1,if=trinket.1.has_use_damage&(!trinket.1.is.font_of_venomous_rage|!variable.opener&(!buff.eclipse.up|variable.pre_burst_mem|fight_remains<2+gcd.max))
+actions+=/use_item,slot=trinket2,if=trinket.2.has_use_damage&(!trinket.2.is.font_of_venomous_rage|!variable.opener&(!buff.eclipse.up|variable.pre_burst_mem|fight_remains<2+gcd.max))
 actions+=/potion,if=!variable.opener&(variable.anchor_cd&(hero_tree.keeper_of_the_grove&prev_gcd.1.force_of_nature|hero_tree.elunes_chosen&prev_gcd.1.fury_of_elune)|!variable.anchor_cd&variable.pre_burst_condition&!variable.burst_refresh_moonfire&!variable.burst_refresh_sunfire)&(variable.ca_burst_next&cooldown.ca_inc.ready|fight_remains<(cooldown.ca_inc.remains>?variable.anchor_cd_remains)+10)|buff.ca_inc.up&fight_remains<cooldown.ca_inc.remains|buff.eclipse.up&fight_remains<(cooldown.ca_inc.remains>?variable.anchor_cd_remains)+10|fight_remains<30+gcd.max
+actions+=/use_item,slot=trinket1,if=trinket.1.has_use_buff&(!variable.opener&(variable.anchor_cd&(hero_tree.keeper_of_the_grove&prev_gcd.1.force_of_nature|hero_tree.elunes_chosen&prev_gcd.1.fury_of_elune)&(!trinket.1.is.hex_lords_dooming_idol|variable.ca_burst_next|fight_remains<variable.ca_burst_effective_cd+buff.ca_inc.duration)|!variable.anchor_cd&variable.pre_burst_condition&!variable.burst_refresh_moonfire&!variable.burst_refresh_sunfire)&(variable.ca_burst_next&cooldown.ca_inc.ready|!cooldown.ca_inc.ready|variable.on_use_trinket=3&((trinket.2.cooldown.remains<?20)<=(cooldown.potion.remains<?variable.anchor_cd_hold_remains+gcd.max)+5)|fight_remains>trinket.1.cooldown.duration+15)|buff.ca_inc.up&fight_remains<cooldown.ca_inc.remains|buff.eclipse.up&fight_remains<(cooldown.ca_inc.remains>?variable.anchor_cd_remains)+10|fight_remains<15+gcd.max)
+actions+=/use_item,slot=trinket2,if=trinket.2.has_use_buff&(!variable.opener&(variable.anchor_cd&(hero_tree.keeper_of_the_grove&prev_gcd.1.force_of_nature|hero_tree.elunes_chosen&prev_gcd.1.fury_of_elune)&(!trinket.2.is.hex_lords_dooming_idol|variable.ca_burst_next|fight_remains<variable.ca_burst_effective_cd+buff.ca_inc.duration)|!variable.anchor_cd&variable.pre_burst_condition&!variable.burst_refresh_moonfire&!variable.burst_refresh_sunfire)&(variable.ca_burst_next&cooldown.ca_inc.ready|!cooldown.ca_inc.ready|variable.on_use_trinket=3&((trinket.1.cooldown.remains<?20)<=(cooldown.potion.remains<?variable.anchor_cd_hold_remains+gcd.max)+5)|fight_remains>trinket.2.cooldown.duration+15)|buff.ca_inc.up&fight_remains<cooldown.ca_inc.remains|buff.eclipse.up&fight_remains<(cooldown.ca_inc.remains>?variable.anchor_cd_remains)+10|fight_remains<15+gcd.max)
 actions+=/berserking,if=!variable.opener&(variable.anchor_cd&(hero_tree.keeper_of_the_grove&prev_gcd.1.force_of_nature|hero_tree.elunes_chosen&prev_gcd.1.fury_of_elune)|!variable.anchor_cd&variable.pre_burst_condition&!variable.burst_refresh_moonfire&!variable.burst_refresh_sunfire)|buff.ca_inc.up&fight_remains<cooldown.ca_inc.remains|buff.eclipse.up&fight_remains<(cooldown.ca_inc.remains>?variable.anchor_cd_remains)+10|fight_remains<buff.berserking.duration+gcd.max
 actions+=/invoke_external_buff,name=power_infusion,if=!variable.opener&(variable.anchor_cd&(hero_tree.keeper_of_the_grove&prev_gcd.1.force_of_nature|hero_tree.elunes_chosen&prev_gcd.1.fury_of_elune)|!variable.anchor_cd&variable.pre_burst_condition&!variable.burst_refresh_moonfire&!variable.burst_refresh_sunfire)|buff.ca_inc.up&fight_remains<cooldown.ca_inc.remains|buff.eclipse.up&fight_remains<(cooldown.ca_inc.remains>?variable.anchor_cd_remains)+10|fight_remains<buff.power_infusion.duration+gcd.max
+
 actions+=/run_action_list,name=ec_st,if=hero_tree.elunes_chosen
 actions+=/run_action_list,name=kotg_st
 
+
 actions.ec_st=variable,name=opener,op=reset,if=buff.ca_inc.up
 actions.ec_st+=/run_action_list,name=ec_st_opener,if=variable.opener
+
 actions.ec_st+=/celestial_alignment,add_queue_lag=1,if=variable.anchor_cd&prev_gcd.1.fury_of_elune&variable.ca_burst_next
-actions.ec_st+=/lunar_eclipse,if=variable.anchor_cd&prev_gcd.1.fury_of_elune
+actions.ec_st+=/eclipse,if=variable.anchor_cd&prev_gcd.1.fury_of_elune
+
 actions.ec_st+=/moonfire,target_if=remains<(gcd.max>?fight_remains)|buff.eclipse.down&refreshable|variable.pre_burst_condition&variable.burst_refresh_moonfire
 actions.ec_st+=/sunfire,target_if=remains<(gcd.max>?fight_remains)|buff.eclipse.down&refreshable|variable.pre_burst_condition&variable.burst_refresh_sunfire
+
 actions.ec_st+=/fury_of_elune,if=variable.pre_burst_condition|talent.lunation|buff.ca_inc.up|fight_remains<(fight_remains<cooldown.ca_inc.remains+gcd.max)*variable.burst_hold_remains+buff.fury_of_elune.duration+gcd.max
 actions.ec_st+=/celestial_alignment,add_queue_lag=1,if=!variable.anchor_cd&variable.pre_burst_condition&variable.ca_burst_next
-actions.ec_st+=/lunar_eclipse,if=!variable.anchor_cd&variable.pre_burst_condition
-actions.ec_st+=/lunar_eclipse,if=variable.ecl_before_burst&cooldown.eclipse.full_recharge_time<gcd.max
-actions.ec_st+=/lunar_eclipse,if=variable.ecl_before_burst&(astral_power>variable.ecl_pooling_threshold|astral_power.deficit<action.starfire.energize_amount+variable.passive_asp)
-actions.ec_st+=/lunar_eclipse,if=variable.ecl_before_burst&variable.burst_hold_remains<0.5+buff.starlord.duration+(1-variable.anchor_cd)*gcd.max|variable.double_ecl_before_burst&variable.burst_hold_remains<(variable.burst_hold_remains-cooldown.eclipse.full_recharge_time>?0.5+buff.starlord.duration+(1-variable.anchor_cd)*gcd.max)+!buff.starlord.at_max_stacks*(0.5+buff.starlord.duration+gcd.max)+buff.starlord.at_max_stacks*(buff.eclipse.duration+gcd.max)
-actions.ec_st+=/lunar_eclipse,if=fight_remains<buff.eclipse.duration+gcd.max+(((fight_remains-cooldown.ca_inc.remains<?0)<?(fight_remains-(cooldown.eclipse.full_recharge_time<?buff.eclipse.duration)<?0))>?((fight_remains-cooldown.ca_inc.remains<?0)>?buff.ca_inc.duration+gcd.max)+((fight_remains-(cooldown.eclipse.full_recharge_time<?buff.eclipse.duration)<?0)>?buff.eclipse.duration+gcd.max))
+actions.ec_st+=/eclipse,if=!variable.anchor_cd&variable.pre_burst_condition
+actions.ec_st+=/eclipse,if=variable.ecl_before_burst&cooldown.eclipse.full_recharge_time<gcd.max
+actions.ec_st+=/eclipse,if=variable.ecl_before_burst&(astral_power>variable.ecl_pooling_threshold|astral_power.deficit<action.starfire.energize_amount+variable.passive_asp)
+actions.ec_st+=/eclipse,if=variable.ecl_before_burst&variable.burst_hold_remains<0.5+buff.starlord.duration+(1-variable.anchor_cd)*gcd.max|variable.double_ecl_before_burst&variable.burst_hold_remains<(variable.burst_hold_remains-cooldown.eclipse.full_recharge_time>?0.5+buff.starlord.duration+(1-variable.anchor_cd)*gcd.max)+!buff.starlord.at_max_stacks*(0.5+buff.starlord.duration+gcd.max)+buff.starlord.at_max_stacks*(buff.eclipse.duration+gcd.max)
+actions.ec_st+=/eclipse,if=fight_remains<buff.eclipse.duration+gcd.max+(((fight_remains-cooldown.ca_inc.remains<?0)<?(fight_remains-(cooldown.eclipse.full_recharge_time<?buff.eclipse.duration)<?0))>?((fight_remains-cooldown.ca_inc.remains<?0)>?buff.ca_inc.duration+gcd.max)+((fight_remains-(cooldown.eclipse.full_recharge_time<?buff.eclipse.duration)<?0)>?buff.eclipse.duration+gcd.max))
 actions.ec_st+=/fury_of_elune,if=cooldown.ca_inc.remains<gcd.max&(buff.eclipse.remains<gcd.max&fight_remains<buff.ca_inc.duration+gcd.max*2+((fight_remains-cooldown.eclipse.remains<?0)>?buff.eclipse.duration+gcd.max)|fight_remains<buff.ca_inc.duration+gcd.max*2)
 actions.ec_st+=/celestial_alignment,add_queue_lag=1,if=buff.eclipse.down&fight_remains<buff.ca_inc.duration+gcd.max+((fight_remains-cooldown.eclipse.remains<?0)>?buff.eclipse.duration+gcd.max)|fight_remains<buff.ca_inc.duration+gcd.max
 actions.ec_st+=/convoke_the_spirits,if=(time-action.fury_of_elune.last_used<10)&buff.eclipse.up&(astral_power<variable.starsurge_cost|(buff.touch_the_cosmos.react|buff.starweavers_warp.react|buff.starweavers_weft.react)&astral_power.deficit>60|buff.eclipse.remains<execute_time+gcd.max)&(fight_remains>cooldown.convoke_the_spirits.duration+execute_time|buff.ca_inc.up|fight_remains<cooldown.ca_inc.remains+execute_time+gcd.max)|(buff.ca_inc.up|buff.eclipse.up&fight_remains<cooldown.ca_inc.remains+execute_time+gcd.max)&(astral_power<variable.starsurge_cost|(buff.touch_the_cosmos.up|buff.starweavers_warp.up|buff.starweavers_weft.up)&astral_power.deficit>60|buff.eclipse.remains<execute_time+gcd.max)|fight_remains<execute_time+gcd.max
-actions.ec_st+=/starfall,if=buff.starweavers_warp.react
-actions.ec_st+=/starfall,if=(talent.starweaver&(buff.ca_inc.down&talent.meteorites&talent.stellar_amplification&(talent.aetherial_kindling|!talent.power_of_goldrinn)|buff.eclipse.down&(talent.meteorites|talent.aetherial_kindling|talent.stellar_amplification&!talent.power_of_goldrinn))|buff.ca_inc.down&talent.incarnation_chosen_of_elune&talent.meteorites&talent.stellar_amplification&talent.aetherial_kindling&!talent.power_of_goldrinn|buff.eclipse.down&(talent.meteorites|talent.incarnation_chosen_of_elune&talent.aetherial_kindling))&buff.touch_the_cosmos.react&!buff.starweavers_weft.react
-actions.ec_st+=/starsurge,if=buff.touch_the_cosmos.react|buff.starweavers_weft.react
-actions.ec_st+=/starsurge,if=buff.eclipse.up&(buff.touch_the_cosmos.react|buff.starweavers_weft.react|astral_power>=variable.starsurge_cost*(1+(buff.incarnation_chosen_of_elune.down&buff.ascendant_stars.down&buff.eclipse.remains<5))&(buff.ascendant_stars.up|variable.burst_hold_remains>5))
-actions.ec_st+=/starsurge,if=buff.eclipse.down&!buff.starlord.at_max_stacks&(variable.ecl_before_burst&!cooldown.eclipse.ready&variable.burst_hold_remains>30|!variable.ecl_before_burst&variable.burst_hold_remains>10)&astral_power>=variable.starsurge_cost
-actions.ec_st+=/starsurge,if=variable.burst_hold_remains>gcd.max*2&astral_power.deficit<action.starfire.energize_amount+variable.passive_asp
+
+actions.ec_st+=/starfall,if=enemies<=1&buff.starweavers_warp.react
+actions.ec_st+=/starfall,if=enemies<=1&(talent.starweaver&(buff.ca_inc.down&talent.meteorites&talent.stellar_amplification&(talent.aetherial_kindling|!talent.power_of_goldrinn)|buff.eclipse.down&(talent.meteorites|talent.aetherial_kindling|talent.stellar_amplification&!talent.power_of_goldrinn))|buff.ca_inc.down&talent.incarnation_chosen_of_elune&talent.meteorites&talent.stellar_amplification&talent.aetherial_kindling&!talent.power_of_goldrinn|buff.eclipse.down&(talent.meteorites|talent.incarnation_chosen_of_elune&talent.aetherial_kindling))&buff.touch_the_cosmos.react&!buff.starweavers_weft.react
+actions.ec_st+=/starsurge,if=enemies<=1&(buff.touch_the_cosmos.react|buff.starweavers_weft.react)
+actions.ec_st+=/starsurge,if=enemies<=1&buff.eclipse.up&(buff.touch_the_cosmos.react|buff.starweavers_weft.react|astral_power>=variable.starsurge_cost*(1+(buff.incarnation_chosen_of_elune.down&buff.ascendant_stars.down&buff.eclipse.remains<5))&(buff.ascendant_stars.up|variable.burst_hold_remains>5))
+actions.ec_st+=/starsurge,if=enemies<=1&buff.eclipse.down&!buff.starlord.at_max_stacks&(variable.ecl_before_burst&!cooldown.eclipse.ready&variable.burst_hold_remains>30|!variable.ecl_before_burst&variable.burst_hold_remains>10)&astral_power>=variable.starsurge_cost
+actions.ec_st+=/starsurge,if=enemies<=1&variable.burst_hold_remains>gcd.max*2&astral_power.deficit<action.starfire.energize_amount+variable.passive_asp
+
+actions.ec_st+=/starsurge,if=enemies>1&buff.starweavers_weft.react&(buff.solstice.remains<gcd.max*2|!(buff.touch_the_cosmos.react|astral_power>=variable.starfall_cost))
+actions.ec_st+=/starfall,if=enemies>1&(buff.touch_the_cosmos.react|buff.starweavers_warp.react)
+actions.ec_st+=/starfall,if=enemies>1&buff.eclipse.up&(buff.touch_the_cosmos.react|buff.starweavers_warp.react|astral_power>=variable.starfall_cost*(1+(buff.incarnation_chosen_of_elune.down&buff.ascendant_stars.down&buff.eclipse.remains<5))&(buff.ascendant_stars.up|variable.burst_hold_remains>5))
+actions.ec_st+=/starfall,if=enemies>1&buff.eclipse.down&!buff.starlord.at_max_stacks&(variable.ecl_before_burst&!cooldown.eclipse.ready&variable.burst_hold_remains>30|!variable.ecl_before_burst&variable.burst_hold_remains>10)&astral_power>=variable.starfall_cost
+actions.ec_st+=/starfall,if=enemies>1&variable.burst_hold_remains>gcd.max*2&astral_power.deficit<action.starfire.energize_amount+variable.passive_asp
+
 actions.ec_st+=/new_moon,if=astral_power.deficit>energize_amount
 actions.ec_st+=/half_moon,if=astral_power.deficit>energize_amount
 actions.ec_st+=/full_moon,if=astral_power.deficit>energize_amount
 actions.ec_st+=/starfire
 
-actions.ec_st_opener=moonfire,if=last_used<0
-actions.ec_st_opener+=/sunfire,if=last_used<0
+
+actions.ec_st_opener=moonfire,target_if=!dot.moonfire.ticking
+actions.ec_st_opener+=/sunfire,target_if=!dot.sunfire.ticking
 actions.ec_st_opener+=/fury_of_elune,if=talent.lunation
 actions.ec_st_opener+=/potion
 actions.ec_st_opener+=/eclipse,if=last_used<0
-actions.ec_st_opener+=/starfall,if=buff.starweavers_warp.react&(buff.ascendant_stars.up|astral_power<variable.burst_pooling_threshold)
-actions.ec_st_opener+=/starsurge,if=(buff.touch_the_cosmos.react|buff.starweavers_weft.react)&(buff.ascendant_stars.stack>talent.convoke_the_spirits|astral_power<variable.burst_pooling_threshold)|buff.ascendant_stars.stack>talent.convoke_the_spirits&astral_power>=variable.starsurge_cost
-actions.ec_st_opener+=/starfire,if=astral_power<variable.burst_pooling_threshold
-actions.ec_st_opener+=/moonfire,if=variable.burst_refresh_moonfire&variable.ca_burst_effective_cd=0
-actions.ec_st_opener+=/sunfire,if=variable.burst_refresh_sunfire&variable.ca_burst_effective_cd=0
+actions.ec_st_opener+=/starfall,if=enemies=1&buff.starweavers_warp.react&(!(variable.anchor_cd&talent.natures_balance)&buff.ascendant_stars.up|astral_power<variable.burst_pooling_threshold)
+actions.ec_st_opener+=/starsurge,if=enemies=1&((buff.touch_the_cosmos.react|buff.starweavers_weft.react)&(!(variable.anchor_cd&talent.natures_balance)&buff.ascendant_stars.stack>talent.convoke_the_spirits|astral_power<variable.burst_pooling_threshold)|!(variable.anchor_cd&talent.natures_balance)&buff.ascendant_stars.stack>talent.convoke_the_spirits&astral_power>=variable.starsurge_cost)
+actions.ec_st_opener+=/starsurge,if=enemies>1&buff.starweavers_weft.react&(!(variable.anchor_cd&talent.natures_balance)&buff.ascendant_stars.up|astral_power<variable.burst_pooling_threshold)
+actions.ec_st_opener+=/starfall,if=enemies>1&((buff.touch_the_cosmos.react|buff.starweavers_warp.react)&(!(variable.anchor_cd&talent.natures_balance)&buff.ascendant_stars.stack>talent.convoke_the_spirits|astral_power<variable.burst_pooling_threshold)|!(variable.anchor_cd&talent.natures_balance)&buff.ascendant_stars.stack>talent.convoke_the_spirits&astral_power>=variable.starfall_cost)
+actions.ec_st_opener+=/starfire,if=buff.ascendant_fires.up|astral_power<variable.burst_pooling_threshold
+actions.ec_st_opener+=/use_item,name=font_of_venomous_rage,if=!variable.on_use_trinket|variable.on_use_trinket=1&trinket.1.is.hex_lords_dooming_idol|variable.on_use_trinket=2&trinket.2.is.hex_lords_dooming_idol
+actions.ec_st_opener+=/moonfire,target_if=variable.burst_refresh_moonfire&variable.ca_burst_effective_cd=0
+actions.ec_st_opener+=/sunfire,target_if=variable.burst_refresh_sunfire&variable.ca_burst_effective_cd=0
 actions.ec_st_opener+=/fury_of_elune
-actions.ec_st_opener+=/use_items,check_existing=0
+actions.ec_st_opener+=/use_item,slot=trinket1,if=trinket.1.has_use_buff&!trinket.1.is.hex_lords_dooming_idol
+actions.ec_st_opener+=/use_item,slot=trinket2,if=trinket.2.has_use_buff&!trinket.2.is.hex_lords_dooming_idol
 actions.ec_st_opener+=/berserking
 actions.ec_st_opener+=/invoke_external_buff,name=power_infusion
 actions.ec_st_opener+=/celestial_alignment,add_queue_lag=1
 
+
 actions.kotg_st=variable,name=opener,op=reset,if=buff.ca_inc.up
 actions.kotg_st+=/run_action_list,name=kotg_st_opener,if=variable.opener
+
 actions.kotg_st+=/celestial_alignment,add_queue_lag=1,if=prev_gcd.1.force_of_nature&variable.ca_burst_next
-actions.kotg_st+=/solar_eclipse,if=prev_gcd.1.force_of_nature
+actions.kotg_st+=/eclipse,if=prev_gcd.1.force_of_nature
+
 actions.kotg_st+=/moonfire,target_if=remains<(gcd.max>?fight_remains)&(!talent.treants_of_the_moon|cooldown.force_of_nature.remains>3&buff.harmony_of_the_grove.down)|(!ticking|buff.eclipse.down&refreshable)&(!talent.treants_of_the_moon|buff.harmony_of_the_grove.down)
 actions.kotg_st+=/sunfire,target_if=remains<(gcd.max>?fight_remains)|buff.eclipse.down&buff.harmony_of_the_grove.down&refreshable|variable.pre_burst_condition&variable.burst_refresh_sunfire&!(talent.wild_mushroom&cooldown.wild_mushroom.charges)
+
 actions.kotg_st+=/wild_mushroom,if=variable.pre_burst_condition
+
 actions.kotg_st+=/fury_of_elune,if=variable.pre_burst_condition|!variable.cds_synced|buff.ca_inc.up|fight_remains<(fight_remains<cooldown.ca_inc.remains+gcd.max)*variable.burst_hold_remains+buff.fury_of_elune.duration+gcd.max
 actions.kotg_st+=/force_of_nature,if=variable.pre_burst_condition&!variable.cds_synced|buff.ca_inc.up|fight_remains<(fight_remains<cooldown.ca_inc.remains+gcd.max)*variable.burst_hold_remains+buff.harmony_of_the_grove.duration+(1+variable.cds_synced)*gcd.max
-actions.kotg_st+=/solar_eclipse,if=variable.ecl_before_burst&cooldown.eclipse.full_recharge_time<gcd.max
-actions.kotg_st+=/solar_eclipse,if=variable.ecl_before_burst&(astral_power>variable.ecl_pooling_threshold|astral_power.deficit<action.wrath.energize_amount+variable.passive_asp)
-actions.kotg_st+=/solar_eclipse,if=variable.ecl_before_burst&variable.burst_hold_remains<0.5+buff.starlord.duration+(1-variable.anchor_cd-variable.cds_synced)*gcd.max|variable.double_ecl_before_burst&variable.burst_hold_remains<(variable.burst_hold_remains-cooldown.eclipse.full_recharge_time>?0.5+buff.starlord.duration+(1-variable.anchor_cd-variable.cds_synced)*gcd.max)+!buff.starlord.at_max_stacks*(0.5+buff.starlord.duration+gcd.max)+buff.starlord.at_max_stacks*(buff.eclipse.duration+gcd.max)
-actions.kotg_st+=/solar_eclipse,if=fight_remains<buff.eclipse.duration+gcd.max+(((fight_remains-cooldown.ca_inc.remains<?0)<?(fight_remains-(cooldown.eclipse.full_recharge_time<?buff.eclipse.duration)<?0))>?((fight_remains-cooldown.ca_inc.remains<?0)>?buff.ca_inc.duration+gcd.max)+((fight_remains-(cooldown.eclipse.full_recharge_time<?buff.eclipse.duration)<?0)>?buff.eclipse.duration+gcd.max))
+
+actions.kotg_st+=/eclipse,if=variable.ecl_before_burst&cooldown.eclipse.full_recharge_time<gcd.max
+actions.kotg_st+=/eclipse,if=variable.ecl_before_burst&(astral_power>variable.ecl_pooling_threshold|astral_power.deficit<(spell_targets.starfire<=2)*action.wrath.energize_amount+(spell_targets.starfire>2)*action.starfire.energize_amount+variable.passive_asp)
+actions.kotg_st+=/eclipse,if=variable.ecl_before_burst&variable.burst_hold_remains<0.5+buff.starlord.duration+(1-variable.anchor_cd-variable.cds_synced)*gcd.max|variable.double_ecl_before_burst&variable.burst_hold_remains<(variable.burst_hold_remains-cooldown.eclipse.full_recharge_time>?0.5+buff.starlord.duration+(1-variable.anchor_cd-variable.cds_synced)*gcd.max)+!buff.starlord.at_max_stacks*(0.5+buff.starlord.duration+gcd.max)+buff.starlord.at_max_stacks*(buff.eclipse.duration+gcd.max)
+actions.kotg_st+=/eclipse,if=fight_remains<buff.eclipse.duration+gcd.max+(((fight_remains-cooldown.ca_inc.remains<?0)<?(fight_remains-(cooldown.eclipse.full_recharge_time<?buff.eclipse.duration)<?0))>?((fight_remains-cooldown.ca_inc.remains<?0)>?buff.ca_inc.duration+gcd.max)+((fight_remains-(cooldown.eclipse.full_recharge_time<?buff.eclipse.duration)<?0)>?buff.eclipse.duration+gcd.max))
+
 actions.kotg_st+=/fury_of_elune,if=cooldown.ca_inc.remains<(1+cooldown.force_of_nature.remains<gcd.max)*gcd.max&(buff.eclipse.remains<(1+cooldown.force_of_nature.remains<gcd.max)*gcd.max&fight_remains<buff.ca_inc.duration+(2+cooldown.force_of_nature.remains<gcd.max)*gcd.max+((fight_remains-cooldown.eclipse.remains<?0)>?buff.eclipse.duration+gcd.max)|fight_remains<buff.ca_inc.duration+(2+cooldown.force_of_nature.remains<gcd.max)*gcd.max)
 actions.kotg_st+=/force_of_nature,if=cooldown.ca_inc.remains<gcd.max&(buff.eclipse.remains<gcd.max&fight_remains<buff.ca_inc.duration+gcd.max*2+((fight_remains-cooldown.eclipse.remains<?0)>?buff.eclipse.duration+gcd.max)|fight_remains<buff.ca_inc.duration+gcd.max*2)
 actions.kotg_st+=/celestial_alignment,add_queue_lag=1,if=buff.eclipse.down&fight_remains<buff.ca_inc.duration+gcd.max+((fight_remains-cooldown.eclipse.remains<?0)>?buff.eclipse.duration+gcd.max)|fight_remains<buff.ca_inc.duration+gcd.max
 actions.kotg_st+=/convoke_the_spirits,if=buff.harmony_of_the_grove.up&(astral_power<variable.starsurge_cost|(buff.touch_the_cosmos.react|buff.starweavers_warp.react|buff.starweavers_weft.react)&astral_power.deficit>60|buff.harmony_of_the_grove.remains<execute_time+gcd.max)&(fight_remains>cooldown.convoke_the_spirits.duration+execute_time|buff.ca_inc.up|fight_remains<cooldown.ca_inc.remains+execute_time+gcd.max)|(buff.ca_inc.up|buff.eclipse.up&fight_remains<cooldown.ca_inc.remains+execute_time+gcd.max)&fight_remains<cooldown.force_of_nature.remains+execute_time+gcd.max&(astral_power<variable.starsurge_cost|(buff.touch_the_cosmos.up|buff.starweavers_warp.up|buff.starweavers_weft.up)&astral_power.deficit>60|buff.eclipse.remains<execute_time+gcd.max)|fight_remains<execute_time+gcd.max
-actions.kotg_st+=/starfall,if=buff.starweavers_warp.react
-actions.kotg_st+=/starfall,if=(talent.starweaver&(talent.meteorites&(talent.incarnation_chosen_of_elune&talent.meteor_storm&!talent.power_of_goldrinn|buff.ca_inc.down&(talent.incarnation_chosen_of_elune|talent.stellar_amplification|!talent.power_of_goldrinn))|buff.eclipse.down&(talent.meteorites|talent.aetherial_kindling|talent.stellar_amplification&!talent.power_of_goldrinn))|buff.ca_inc.down&talent.meteorites&talent.aetherial_kindling&talent.stellar_amplification&!talent.power_of_goldrinn|buff.eclipse.down&talent.meteorites&(talent.aetherial_kindling|talent.stellar_amplification|!talent.power_of_goldrinn))&buff.touch_the_cosmos.react&!buff.starweavers_weft.react
-actions.kotg_st+=/starsurge,if=buff.touch_the_cosmos.react|buff.starweavers_weft.react
-actions.kotg_st+=/starsurge,if=buff.eclipse.up&(buff.touch_the_cosmos.react|buff.starweavers_weft.react|astral_power>=variable.starsurge_cost*(1+(buff.incarnation_chosen_of_elune.down&buff.ascendant_stars.down&buff.eclipse.remains<5))&(buff.ascendant_stars.up|variable.burst_hold_remains>5))
-actions.kotg_st+=/starsurge,if=buff.eclipse.down&!buff.starlord.at_max_stacks&(variable.ecl_before_burst&!cooldown.eclipse.ready&variable.burst_hold_remains>30|!variable.ecl_before_burst&variable.burst_hold_remains>9-variable.cds_synced*3)&astral_power>=variable.starsurge_cost
-actions.kotg_st+=/starsurge,if=astral_power.deficit<action.wrath.energize_amount+variable.passive_asp
+
+actions.kotg_st+=/starfall,if=enemies=1&buff.starweavers_warp.react
+actions.kotg_st+=/starfall,if=enemies=1&(talent.starweaver&(talent.meteorites&(talent.incarnation_chosen_of_elune&talent.meteor_storm&!talent.power_of_goldrinn|buff.ca_inc.down&(talent.incarnation_chosen_of_elune|talent.stellar_amplification|!talent.power_of_goldrinn))|buff.eclipse.down&(talent.meteorites|talent.aetherial_kindling|talent.stellar_amplification&!talent.power_of_goldrinn))|buff.ca_inc.down&talent.meteorites&talent.aetherial_kindling&talent.stellar_amplification&!talent.power_of_goldrinn|buff.eclipse.down&talent.meteorites&(talent.aetherial_kindling|talent.stellar_amplification|!talent.power_of_goldrinn))&buff.touch_the_cosmos.react&!buff.starweavers_weft.react
+actions.kotg_st+=/starsurge,if=enemies=1&(buff.touch_the_cosmos.react|buff.starweavers_weft.react)
+actions.kotg_st+=/starsurge,if=enemies=1&buff.eclipse.up&(buff.touch_the_cosmos.react|buff.starweavers_weft.react|astral_power>=variable.starsurge_cost*(1+(buff.incarnation_chosen_of_elune.down&buff.ascendant_stars.down&buff.eclipse.remains<5))&(buff.ascendant_stars.up|variable.burst_hold_remains>5))
+actions.kotg_st+=/starsurge,if=enemies=1&buff.eclipse.down&!buff.starlord.at_max_stacks&(variable.ecl_before_burst&!cooldown.eclipse.ready&variable.burst_hold_remains>30|!variable.ecl_before_burst&variable.burst_hold_remains>9-variable.cds_synced*3)&astral_power>=variable.starsurge_cost
+actions.kotg_st+=/starsurge,if=enemies=1&astral_power.deficit<action.wrath.energize_amount+variable.passive_asp
+
+actions.kotg_st+=/starsurge,if=enemies>1&buff.starweavers_weft.react
+actions.kotg_st+=/starfall,if=enemies>1&(buff.touch_the_cosmos.react|buff.starweavers_warp.react)
+actions.kotg_st+=/starfall,if=enemies>1&buff.eclipse.up&(buff.touch_the_cosmos.react|buff.starweavers_warp.react|astral_power>=variable.starfall_cost*(1+(buff.incarnation_chosen_of_elune.down&buff.ascendant_stars.down&buff.eclipse.remains<5))&(buff.ascendant_stars.up|variable.burst_hold_remains>5))
+actions.kotg_st+=/starfall,if=enemies>1&buff.eclipse.down&!buff.starlord.at_max_stacks&(variable.ecl_before_burst&!cooldown.eclipse.ready&variable.burst_hold_remains>30|!variable.ecl_before_burst&variable.burst_hold_remains>9-variable.cds_synced*3)&astral_power>=variable.starfall_cost
+actions.kotg_st+=/starfall,if=enemies>1&astral_power.deficit<(spell_targets.starfire<=2)*action.wrath.energize_amount+(spell_targets.starfire>2)*action.starfire.energize_amount+variable.passive_asp
+
 actions.kotg_st+=/new_moon,if=astral_power.deficit>energize_amount
 actions.kotg_st+=/half_moon,if=astral_power.deficit>energize_amount
 actions.kotg_st+=/full_moon,if=astral_power.deficit>energize_amount
 actions.kotg_st+=/wild_mushroom,if=buff.eclipse_solar.up&fight_remains<variable.burst_effective_cd+dot.fungal_growth.duration|fight_remains<dot.fungal_growth.duration+gcd.max
+actions.kotg_st+=/starfire,if=spell_targets>2
 actions.kotg_st+=/wrath
 
-actions.kotg_st_opener=moonfire,if=last_used<0
-actions.kotg_st_opener+=/sunfire,if=last_used<0
+
+actions.kotg_st_opener=moonfire,target_if=!dot.moonfire.ticking
+actions.kotg_st_opener+=/sunfire,target_if=!dot.sunfire.ticking
 actions.kotg_st_opener+=/potion
-actions.kotg_st_opener+=/solar_eclipse,if=last_used<0
-actions.kotg_st_opener+=/starfall,if=buff.starweavers_warp.react&(buff.ascendant_stars.up|astral_power<variable.burst_pooling_threshold)
-actions.kotg_st_opener+=/starsurge,if=(buff.touch_the_cosmos.react|buff.starweavers_weft.react)&(buff.ascendant_stars.stack>!talent.natures_balance|astral_power<variable.burst_pooling_threshold)|buff.ascendant_stars.stack>!talent.natures_balance&astral_power>=variable.starsurge_cost
+actions.kotg_st_opener+=/eclipse,if=last_used<0
+actions.kotg_st_opener+=/starfall,if=enemies=1&buff.starweavers_warp.react&(buff.ascendant_stars.up|astral_power<variable.burst_pooling_threshold)
+actions.kotg_st_opener+=/starsurge,if=enemies=1&((buff.touch_the_cosmos.react|buff.starweavers_weft.react)&(buff.ascendant_stars.stack>!talent.natures_balance|astral_power<variable.burst_pooling_threshold)|buff.ascendant_stars.stack>!talent.natures_balance&astral_power>=variable.starsurge_cost)
+actions.kotg_st_opener+=/starsurge,if=enemies>1&buff.starweavers_weft.react&(buff.ascendant_stars.up|astral_power<variable.burst_pooling_threshold)
+actions.kotg_st_opener+=/starfall,if=enemies>1&((buff.touch_the_cosmos.react|buff.starweavers_warp.react)&(buff.ascendant_stars.stack>!talent.natures_balance|astral_power<variable.burst_pooling_threshold)|buff.ascendant_stars.stack>!talent.natures_balance&astral_power>=variable.starfall_cost)
+actions.kotg_st_opener+=/starfire,if=buff.eclipse_lunar.up&astral_power<variable.burst_pooling_threshold&action.wild_mushroom.last_used<0
 actions.kotg_st_opener+=/wrath,if=astral_power<variable.burst_pooling_threshold&action.wild_mushroom.last_used<0
-actions.kotg_st_opener+=/sunfire,if=variable.burst_refresh_sunfire&variable.ca_burst_effective_cd=0
+actions.kotg_st_opener+=/use_item,name=font_of_venomous_rage,if=!variable.on_use_trinket|variable.on_use_trinket=1&trinket.1.is.hex_lords_dooming_idol|variable.on_use_trinket=2&trinket.2.is.hex_lords_dooming_idol
+actions.kotg_st_opener+=/sunfire,target_if=variable.burst_refresh_sunfire&variable.ca_burst_effective_cd=0
 actions.kotg_st_opener+=/wild_mushroom
 actions.kotg_st_opener+=/fury_of_elune
 actions.kotg_st_opener+=/force_of_nature
-actions.kotg_st_opener+=/use_items,check_existing=0
+actions.kotg_st_opener+=/use_item,slot=trinket1,if=trinket.1.has_use_buff&!trinket.1.is.hex_lords_dooming_idol
+actions.kotg_st_opener+=/use_item,slot=trinket2,if=trinket.2.has_use_buff&!trinket.2.is.hex_lords_dooming_idol
 actions.kotg_st_opener+=/berserking
 actions.kotg_st_opener+=/invoke_external_buff,name=power_infusion
 actions.kotg_st_opener+=/celestial_alignment,add_queue_lag=1
@@ -172,24 +354,6 @@ gear_haste_rating=0
 gear_mastery_rating=0
 gear_crit_rating=0
 gear_versatility_rating=0
-
-# Items
-head=enigmatic_dreamwatchers_somnolent_stare,id=271528,bonus_id=13692/13698/13750/13847/13848,gem_id=240983,enchant_id=8017,redirected_base_stats=271875
-neck=aqirbane_reliquary,id=268265,bonus_id=40/13335/13668/13708/13848,gem_id=240918/240892,content_tuning=883
-shoulders=enigmatic_dreamwatchers_plumage,id=271526,bonus_id=40/12854/13335/13694/13697,enchant_id=8001,content_tuning=807
-back=silken_voodoo_drape,id=268253,bonus_id=13662/13848
-chest=enigmatic_dreamwatchers_lunar_raiment,id=271531,bonus_id=12854/13690/13698,enchant_id=7987,redirected_base_stats=251159
-wrists=enigmatic_dreamwatchers_wraps,id=271524,bonus_id=40/12854/13335/13696/13750,gem_id=240892,content_tuning=807
-hands=enigmatic_dreamwatchers_gauntlets,id=271529,bonus_id=12854/13691/13697,redirected_base_stats=268234
-waist=sash_of_the_forlorn_vessel,id=268256,bonus_id=13662/13750/13848,gem_id=240892
-legs=enigmatic_dreamwatchers_leggings,id=271527,bonus_id=13693/13698/13848,enchant_id=7935,redirected_base_stats=268225
-feet=arctic_explorers_legwraps,id=251153,bonus_id=12854/13662,enchant_id=7963
-finger1=vile_alchemists_band,id=268249,bonus_id=40/12854/13335/13668,gem_id=240908,enchant_id=7967,content_tuning=883
-finger2=loa_worshipers_band,id=251513,bonus_id=8960/12214/13751/13836/9627,gem_id=240898,enchant_id=7967
-trinket1=vile_vial_of_volatile_venom,id=273796,bonus_id=40/12854/13440,content_tuning=883
-trinket2=gebbos_bottomless_bag,id=270164,bonus_id=40/12854/13335,content_tuning=883
-main_hand=janthrazet_the_soul_fang,id=271092,bonus_id=13662/13848,enchant_id=8041
-off_hand=alnhara_lantern,id=245769,bonus_id=8960/12214/13751/13771/13836/9627,crafted_stats=32/49
 """
 
 GLOBAL_SETTINGS = """
@@ -200,7 +364,7 @@ threads=0
 iterations=10000
 """
 
-def generate_4stat_grid_dynamic(output_filename="moonkin_grid_4stat.simc", budget=3049, steps_per_axis=20):
+def generate_4stat_grid_dynamic(output_filename="moonkin_grid_4stat.simc", budget=3236, steps_per_axis=20):
     step = round(budget / steps_per_axis)
     
     profiles = []
@@ -260,4 +424,4 @@ def generate_4stat_grid_dynamic(output_filename="moonkin_grid_4stat.simc", budge
         f.write("".join(profiles))
 
 if __name__ == "__main__":
-    generate_4stat_grid_dynamic(budget=3049, steps_per_axis=20)
+    generate_4stat_grid_dynamic(budget=3236, steps_per_axis=20)
