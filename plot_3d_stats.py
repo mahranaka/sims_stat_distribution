@@ -81,7 +81,7 @@ def create_tetrahedral_plot(df, threshold_percent=0.02):
 
     fig = go.Figure()
 
-    # 1. Background points (Updated with Delta to MAX)
+    # 1. Background points (Gesamtfeld mit Plasma-Colorscale)
     rest_hover = [
         f"<b>{r['name']}</b><br>"
         f"<b>DPS:</b> {r['dps']:,.0f}<br>"
@@ -103,8 +103,13 @@ def create_tetrahedral_plot(df, threshold_percent=0.02):
             colorscale="Plasma",
             cmin=df["dps"].min(),
             cmax=max_dps,
-            opacity=0.25,
-            showscale=False
+            opacity=0.20,
+            showscale=True,
+            colorbar=dict(
+                title="All Sims DPS",
+                x=1.0,
+                len=0.75
+            )
         ),
         text=rest_hover,
         hoverinfo="text",
@@ -112,7 +117,7 @@ def create_tetrahedral_plot(df, threshold_percent=0.02):
         name="Other Sims"
     ))
 
-    # 2. Top-performing cloud points
+    # 2. Top-performing cloud points (Eigener Gradient & skaliert auf cutoff_dps .. max_dps)
     top_hover = [
         f"<b>TOP {pct_str} PROFILE</b><br>"
         f"<b>Profile:</b> {r['name']}<br>"
@@ -130,14 +135,18 @@ def create_tetrahedral_plot(df, threshold_percent=0.02):
         x=df_top["x"], y=df_top["y"], z=df_top["z"],
         mode="markers",
         marker=dict(
-            size=6,
+            size=7,
             color=df_top["dps"],
-            colorscale="Plasma",
-            cmin=df["dps"].min(),
-            cmax=max_dps,
-            opacity=0.9,
-            line=dict(width=1, color="#FFD700"),
-            colorbar=dict(title="DPS"),
+            colorscale="Viridis",  # Viridis bringt im Top-Bereich maximalen Kontrast
+            cmin=cutoff_dps,       # Untere Grenze exakt am Threshold
+            cmax=max_dps,          # Obere Grenze am Maximum
+            opacity=0.95,
+            line=dict(width=1, color="#FFFFFF"),
+            colorbar=dict(
+                title=f"Top {pct_str} DPS",
+                x=1.12,            # Neben der ersten Colorbar positioniert
+                len=0.75
+            ),
             showscale=True
         ),
         text=top_hover,
@@ -174,7 +183,7 @@ def create_tetrahedral_plot(df, threshold_percent=0.02):
         name="Absolute Peak"
     ))
 
-    # 4. Outermost Stat Boundary Points (Layered for High-Contrast White Borders)
+    # 4. Outermost Stat Boundary Points (White Ring + Viridis Core)
     if not df_top.empty:
         max_h_val = df_top["haste"].max()
         max_m_val = df_top["mastery"].max()
@@ -201,12 +210,12 @@ def create_tetrahedral_plot(df, threshold_percent=0.02):
             for _, r in df_bounds.iterrows()
         ]
 
-        # Layer 1: Bright White Background Ring
+        # Layer 1: Bright White Outer Ring
         fig.add_trace(go.Scatter3d(
             x=df_bounds["x"], y=df_bounds["y"], z=df_bounds["z"],
             mode="markers",
             marker=dict(
-                size=10.0,
+                size=11.0,
                 color="#FFFFFF",
                 opacity=1.0
             ),
@@ -214,17 +223,18 @@ def create_tetrahedral_plot(df, threshold_percent=0.02):
             showlegend=False
         ))
 
-        # Layer 2: Plasma DPS Gradient Core
+        # Layer 2: Viridis Core
         fig.add_trace(go.Scatter3d(
             x=df_bounds["x"], y=df_bounds["y"], z=df_bounds["z"],
             mode="markers",
             marker=dict(
-                size=6.5,
+                size=7.0,
                 color=df_bounds["dps"],
-                colorscale="Plasma",
-                cmin=df["dps"].min(),
+                colorscale="Viridis",
+                cmin=cutoff_dps,
                 cmax=max_dps,
-                opacity=1.0
+                opacity=1.0,
+                showscale=False
             ),
             text=bound_hover,
             hoverinfo="text",
@@ -232,7 +242,7 @@ def create_tetrahedral_plot(df, threshold_percent=0.02):
             name="Threshold Outer Bounds"
         ))
 
-    # 5. Tetrahedron Wireframe & Axis Vertex Labels
+    # 5. Wireframe & Axes
     vertices = {
         "HASTE": (0, 0, 1),
         "MASTERY": (2 * np.sqrt(2) / 3, 0, -1/3),
@@ -295,7 +305,6 @@ def create_tetrahedral_plot(df, threshold_percent=0.02):
     
     html_content = fig.to_html(include_plotlyjs="cdn", full_html=True)
 
-    # Injected HTML/JS UI elements: Top-Left Toggle Button with Dynamic Countdown
     auto_spin_js = """
     <button id="spin-toggle-btn" style="
         position: absolute;
@@ -420,7 +429,7 @@ def create_tetrahedral_plot(df, threshold_percent=0.02):
     with open(output_html, "w", encoding="utf-8") as f:
         f.write(html_content)
 
-    print(f"Saved 3D tetrahedral plot with countdown button as: {output_html}")
+    print(f"Saved 3D tetrahedral plot with dual gradient as: {output_html}")
     
     try:
         webbrowser.open("file://" + os.path.realpath(output_html))
